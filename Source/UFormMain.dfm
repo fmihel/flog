@@ -4,7 +4,8 @@ object frmMain: TfrmMain
   Caption = 'flog'
   ClientHeight = 548
   ClientWidth = 855
-  Color = clBtnFace
+  Color = 4142124
+  Ctl3D = False
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -14,27 +15,52 @@ object frmMain: TfrmMain
   OldCreateOrder = False
   Scaled = False
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
     Top = 0
     Width = 855
-    Height = 30
+    Height = 27
     Align = alTop
+    BevelOuter = bvNone
     Caption = 'Panel1'
+    Color = 4142124
+    ParentBackground = False
     ShowCaption = False
     TabOrder = 0
     DesignSize = (
       855
-      30)
-    object Button1: TButton
-      Left = 5
-      Top = 3
-      Width = 57
-      Height = 23
+      27)
+    object SpeedButton1: TSpeedButton
+      Left = 8
+      Top = 4
+      Width = 41
+      Height = 20
       Action = actAdd
-      TabOrder = 0
+      Flat = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object SpeedButton2: TSpeedButton
+      Left = 808
+      Top = 4
+      Width = 41
+      Height = 20
+      Action = actGoToTray
+      Anchors = [akTop, akRight]
+      Flat = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
     end
     object ComboBox1: TComboBox
       Left = 68
@@ -42,9 +68,10 @@ object frmMain: TfrmMain
       Width = 101
       Height = 21
       Style = csDropDownList
+      Color = 8678491
       ItemHeight = 13
       ItemIndex = 1
-      TabOrder = 1
+      TabOrder = 0
       Text = 'refresh: 2 sec'
       OnChange = ComboBox1Change
       Items.Strings = (
@@ -60,24 +87,16 @@ object frmMain: TfrmMain
       Width = 106
       Height = 21
       Style = csDropDownList
+      Color = 8678491
       ItemHeight = 13
       ItemIndex = 0
-      TabOrder = 2
+      TabOrder = 1
       Text = 'place: cascade'
       OnChange = ComboBox2Change
       Items.Strings = (
         'place: cascade'
         'place: vert'
         'place: horiz')
-    end
-    object Button2: TButton
-      Left = 791
-      Top = 3
-      Width = 57
-      Height = 23
-      Action = actGoToTray
-      Anchors = [akTop, akRight]
-      TabOrder = 3
     end
   end
   object Timer1: TTimer

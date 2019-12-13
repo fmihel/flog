@@ -1,10 +1,11 @@
 object frmView: TfrmView
-  Left = 816
-  Top = 524
+  Left = 663
+  Top = 691
   Caption = 'frmView'
   ClientHeight = 269
-  ClientWidth = 952
-  Color = clBtnFace
+  ClientWidth = 1225
+  Color = clWindow
+  Ctl3D = False
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -21,28 +22,37 @@ object frmView: TfrmView
   object Memo: TMemo
     Left = 0
     Top = 0
-    Width = 952
+    Width = 1225
     Height = 269
     Align = alClient
+    Color = 4142124
     Font.Charset = RUSSIAN_CHARSET
-    Font.Color = clWindowText
+    Font.Color = 11004803
     Font.Height = -11
     Font.Name = 'Courier New'
     Font.Style = []
+    Lines.Strings = (
+      
+        '[13-Dec-2019 11:50:32 UTC] fmihel\ConvertPdfToImage\ConvertPdfTo' +
+        'Image::load Exception: PDFDelegateFailed `'#1053#1077' '#1091#1076#1072#1077#1090#1089#1103' '#1085#1072#1081#1090#1080' '#1091#1082#1072#1079#1072 +
+        #1085#1085#1099#1081' '#1092#1072#1081#1083'.'
+      #39' @ error/pdf.c/ReadPDFImage/794'
+      
+        '[13-Dec-2019 11:50:32 UTC] fmihel\ConvertPdfToImage\ConvertPdfTo' +
+        'Image::save Exception: PDFDelegateFailed `'#1053#1077' '#1091#1076#1072#1077#1090#1089#1103' '#1085#1072#1081#1090#1080' '#1091#1082#1072#1079#1072 +
+        #1085#1085#1099#1081' '#1092#1072#1081#1083'.'
+      #39' @ error/pdf.c/ReadPDFImage/794')
     ParentFont = False
     PopupMenu = PopupMenu1
     ReadOnly = True
     ScrollBars = ssBoth
     TabOrder = 0
     WordWrap = False
-    ExplicitLeft = 8
-    ExplicitTop = 48
-    ExplicitWidth = 905
-    ExplicitHeight = 193
+    ExplicitWidth = 952
   end
   object ActionManager1: TActionManager
-    Left = 696
-    Top = 24
+    Left = 704
+    Top = 104
     StyleName = 'Platform Default'
     object actClose: TAction
       Caption = 'close'
@@ -54,8 +64,8 @@ object frmView: TfrmView
     end
   end
   object PopupMenu1: TPopupMenu
-    Left = 576
-    Top = 24
+    Left = 592
+    Top = 120
     object clear1: TMenuItem
       Action = actClear
     end

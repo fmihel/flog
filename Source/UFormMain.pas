@@ -5,12 +5,11 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UFormView, StdCtrls, ExtCtrls, ToolWin, ComCtrls,
-  PlatformDefaultStyleActnCtrls, ActnList, ActnMan, Menus;
+  PlatformDefaultStyleActnCtrls, ActnList, ActnMan, Menus, Buttons;
 
 type
   TfrmMain = class(TForm)
     Panel1: TPanel;
-    Button1: TButton;
     Timer1: TTimer;
     ActionManager1: TActionManager;
     actAdd: TAction;
@@ -22,13 +21,15 @@ type
     actReturnFromTray: TAction;
     actGoToTray: TAction;
     show1: TMenuItem;
-    Button2: TButton;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
     procedure actGoToTrayExecute(Sender: TObject);
     procedure actReturnFromTrayExecute(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
     procedure ComboBox2Change(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations}
@@ -72,7 +73,6 @@ begin
     TrayIcon1.Visible:=true;
     Visible:=true;
     Application.ProcessMessages;
-    self.BringToFront;
 end;
 
 procedure TfrmMain.ComboBox1Change(Sender: TObject);
@@ -83,6 +83,13 @@ end;
 procedure TfrmMain.ComboBox2Change(Sender: TObject);
 begin
     initPlace();
+end;
+
+procedure TfrmMain.FormShow(Sender: TObject);
+begin
+    Color:=$003F342C;
+    self.BringToFront;
+
 end;
 
 procedure TfrmMain.initPlace;
