@@ -23,10 +23,13 @@ type
     show1: TMenuItem;
     SpeedButton1: TSpeedButton;
     SpeedButton2: TSpeedButton;
+    actSetup: TAction;
+    SpeedButton3: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
     procedure actGoToTrayExecute(Sender: TObject);
     procedure actReturnFromTrayExecute(Sender: TObject);
+    procedure actSetupExecute(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
     procedure ComboBox2Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -44,6 +47,9 @@ var
   frmMain: TfrmMain;
 
 implementation
+
+uses
+  UFormSetup;
 
 {$R *.dfm}
 
@@ -73,6 +79,11 @@ begin
     TrayIcon1.Visible:=true;
     Visible:=true;
     Application.ProcessMessages;
+end;
+
+procedure TfrmMain.actSetupExecute(Sender: TObject);
+begin
+    frmSetup.ShowModal();
 end;
 
 procedure TfrmMain.ComboBox1Change(Sender: TObject);

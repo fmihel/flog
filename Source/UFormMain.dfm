@@ -48,12 +48,26 @@ object frmMain: TfrmMain
       ParentFont = False
     end
     object SpeedButton2: TSpeedButton
-      Left = 808
+      Left = 806
       Top = 4
       Width = 41
       Height = 20
       Action = actGoToTray
       Anchors = [akTop, akRight]
+      Flat = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object SpeedButton3: TSpeedButton
+      Left = 304
+      Top = 4
+      Width = 41
+      Height = 20
+      Action = actSetup
       Flat = True
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -119,6 +133,10 @@ object frmMain: TfrmMain
     object actGoToTray: TAction
       Caption = 'tray'
       OnExecute = actGoToTrayExecute
+    end
+    object actSetup: TAction
+      Caption = 'setup'
+      OnExecute = actSetupExecute
     end
   end
   object OpenDialog1: TOpenDialog
