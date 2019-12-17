@@ -6,9 +6,6 @@
 			<Projects Include="flog.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="..\..\LogParsing\Project\log_parsing.dproj">
-				<Dependencies/>
-			</Projects>
 		</ItemGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -26,23 +23,14 @@
 		<Target Name="flog:Make">
 			<MSBuild Targets="Make" Projects="flog.dproj"/>
 		</Target>
-		<Target Name="log_parsing">
-			<MSBuild Projects="..\..\LogParsing\Project\log_parsing.dproj"/>
-		</Target>
-		<Target Name="log_parsing:Clean">
-			<MSBuild Targets="Clean" Projects="..\..\LogParsing\Project\log_parsing.dproj"/>
-		</Target>
-		<Target Name="log_parsing:Make">
-			<MSBuild Targets="Make" Projects="..\..\LogParsing\Project\log_parsing.dproj"/>
-		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="flog;log_parsing"/>
+			<CallTarget Targets="flog"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="flog:Clean;log_parsing:Clean"/>
+			<CallTarget Targets="flog:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="flog:Make;log_parsing:Make"/>
+			<CallTarget Targets="flog:Make"/>
 		</Target>
 		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 	</Project>
