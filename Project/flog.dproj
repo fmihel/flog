@@ -50,6 +50,9 @@
 				<Form>frmView</Form>
 			</DCCReference>
 			<DCCReference Include="..\Source\UClassView.pas"/>
+			<DCCReference Include="..\Source\UFormSetup.pas">
+				<Form>frmSetup</Form>
+			</DCCReference>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

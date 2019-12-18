@@ -22,7 +22,7 @@ object frmMain: TfrmMain
     Left = 0
     Top = 0
     Width = 855
-    Height = 27
+    Height = 24
     Align = alTop
     BevelOuter = bvNone
     Caption = 'Panel1'
@@ -32,12 +32,12 @@ object frmMain: TfrmMain
     TabOrder = 0
     DesignSize = (
       855
-      27)
+      24)
     object SpeedButton1: TSpeedButton
       Left = 8
-      Top = 4
-      Width = 41
-      Height = 20
+      Top = 0
+      Width = 54
+      Height = 23
       Action = actAdd
       Flat = True
       Font.Charset = DEFAULT_CHARSET
@@ -48,10 +48,10 @@ object frmMain: TfrmMain
       ParentFont = False
     end
     object SpeedButton2: TSpeedButton
-      Left = 808
-      Top = 4
-      Width = 41
-      Height = 20
+      Left = 794
+      Top = 0
+      Width = 54
+      Height = 23
       Action = actGoToTray
       Anchors = [akTop, akRight]
       Flat = True
@@ -62,41 +62,63 @@ object frmMain: TfrmMain
       Font.Style = []
       ParentFont = False
     end
-    object ComboBox1: TComboBox
-      Left = 68
-      Top = 4
-      Width = 101
-      Height = 21
-      Style = csDropDownList
-      Color = 8678491
-      ItemHeight = 13
-      ItemIndex = 1
-      TabOrder = 0
-      Text = 'refresh: 2 sec'
-      OnChange = ComboBox1Change
-      Items.Strings = (
-        'refresh: no'
-        'refresh: 2 sec'
-        'refresh: 5 sec'
-        'refresh: 10 sec'
-        'refresh: 60 sec')
+    object SpeedButton3: TSpeedButton
+      Left = 64
+      Top = 0
+      Width = 54
+      Height = 23
+      Action = actSetup
+      Flat = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
     end
-    object ComboBox2: TComboBox
-      Left = 175
-      Top = 4
-      Width = 106
-      Height = 21
-      Style = csDropDownList
-      Color = 8678491
-      ItemHeight = 13
-      ItemIndex = 0
-      TabOrder = 1
-      Text = 'place: cascade'
-      OnChange = ComboBox2Change
-      Items.Strings = (
-        'place: cascade'
-        'place: vert'
-        'place: horiz')
+    object SpeedButton4: TSpeedButton
+      Left = 168
+      Top = 0
+      Width = 54
+      Height = 23
+      Action = actCascade
+      Flat = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object SpeedButton5: TSpeedButton
+      Left = 229
+      Top = 0
+      Width = 54
+      Height = 23
+      Action = actHoriz
+      Flat = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object SpeedButton6: TSpeedButton
+      Tag = 1
+      Left = 731
+      Top = 0
+      Width = 58
+      Height = 23
+      Action = actStayOnTop
+      Anchors = [akTop, akRight]
+      Flat = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
     end
   end
   object Timer1: TTimer
@@ -119,6 +141,22 @@ object frmMain: TfrmMain
     object actGoToTray: TAction
       Caption = 'tray'
       OnExecute = actGoToTrayExecute
+    end
+    object actSetup: TAction
+      Caption = 'setup..'
+      OnExecute = actSetupExecute
+    end
+    object actCascade: TAction
+      Caption = 'cascade'
+      OnExecute = actCascadeExecute
+    end
+    object actHoriz: TAction
+      Caption = 'horiz'
+      OnExecute = actHorizExecute
+    end
+    object actStayOnTop: TAction
+      Caption = 'on top: OFF'
+      OnExecute = actStayOnTopExecute
     end
   end
   object OpenDialog1: TOpenDialog

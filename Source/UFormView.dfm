@@ -1,9 +1,9 @@
 object frmView: TfrmView
-  Left = 663
-  Top = 691
+  Left = 807
+  Top = 718
   Caption = 'frmView'
   ClientHeight = 269
-  ClientWidth = 1225
+  ClientWidth = 1082
   Color = clWindow
   Ctl3D = False
   Font.Charset = DEFAULT_CHARSET
@@ -22,14 +22,14 @@ object frmView: TfrmView
   object Memo: TMemo
     Left = 0
     Top = 0
-    Width = 1225
+    Width = 1082
     Height = 269
     Align = alClient
     Color = 4142124
     Font.Charset = RUSSIAN_CHARSET
-    Font.Color = 11004803
-    Font.Height = -11
-    Font.Name = 'Courier New'
+    Font.Color = 14341071
+    Font.Height = -13
+    Font.Name = 'Consolas'
     Font.Style = []
     Lines.Strings = (
       
@@ -41,14 +41,17 @@ object frmView: TfrmView
         '[13-Dec-2019 11:50:32 UTC] fmihel\ConvertPdfToImage\ConvertPdfTo' +
         'Image::save Exception: PDFDelegateFailed `'#1053#1077' '#1091#1076#1072#1077#1090#1089#1103' '#1085#1072#1081#1090#1080' '#1091#1082#1072#1079#1072 +
         #1085#1085#1099#1081' '#1092#1072#1081#1083'.'
-      #39' @ error/pdf.c/ReadPDFImage/794')
+      #39' @ error/pdf.c/ReadPDFImage/794'
+      ''
+      '12345678'
+      'WWwwAA 8')
     ParentFont = False
     PopupMenu = PopupMenu1
     ReadOnly = True
     ScrollBars = ssBoth
     TabOrder = 0
     WordWrap = False
-    ExplicitWidth = 952
+    ExplicitWidth = 1225
   end
   object ActionManager1: TActionManager
     Left = 704
