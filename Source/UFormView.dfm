@@ -1,5 +1,5 @@
 object frmView: TfrmView
-  Left = 807
+  Left = 2727
   Top = 718
   Caption = 'frmView'
   ClientHeight = 269
@@ -51,7 +51,6 @@ object frmView: TfrmView
     ScrollBars = ssBoth
     TabOrder = 0
     WordWrap = False
-    ExplicitWidth = 1225
   end
   object ActionManager1: TActionManager
     Left = 704

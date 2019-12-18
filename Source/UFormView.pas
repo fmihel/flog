@@ -67,7 +67,7 @@ end;
 
 procedure TfrmView.DoNewData(sender: TObject; str: string);
 begin
-    TfrmMain(owner).MessageToTray(str);
+    TfrmMain(owner).MessageToTray(Utf8ToAnsi(str));
 end;
 
 procedure TfrmView.FormClose(Sender: TObject; var Action: TCloseAction);
