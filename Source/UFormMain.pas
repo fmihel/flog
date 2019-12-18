@@ -13,9 +13,7 @@ type
     Timer1: TTimer;
     ActionManager1: TActionManager;
     actAdd: TAction;
-    ComboBox1: TComboBox;
     OpenDialog1: TOpenDialog;
-    ComboBox2: TComboBox;
     TrayIcon1: TTrayIcon;
     PopupMenu1: TPopupMenu;
     actReturnFromTray: TAction;
@@ -25,19 +23,24 @@ type
     SpeedButton2: TSpeedButton;
     actSetup: TAction;
     SpeedButton3: TSpeedButton;
+    actCascade: TAction;
+    actHoriz: TAction;
+    SpeedButton4: TSpeedButton;
+    SpeedButton5: TSpeedButton;
+    SpeedButton6: TSpeedButton;
+    actStayOnTop: TAction;
     procedure FormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
     procedure actGoToTrayExecute(Sender: TObject);
     procedure actReturnFromTrayExecute(Sender: TObject);
     procedure actSetupExecute(Sender: TObject);
-    procedure ComboBox1Change(Sender: TObject);
-    procedure ComboBox2Change(Sender: TObject);
+    procedure actCascadeExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure actHorizExecute(Sender: TObject);
+    procedure actStayOnTopExecute(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations}
-    procedure initTimer();
-    procedure initPlace();
   public
     { Public declarations }
     procedure MessageToTray(str:string);
@@ -55,7 +58,8 @@ uses
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
-    initTimer();
+    frmSetup.initTimer;
+    actStayOnTopExecute(nil);
 end;
 
 procedure TfrmMain.actAddExecute(Sender: TObject);
@@ -86,14 +90,9 @@ begin
     frmSetup.ShowModal();
 end;
 
-procedure TfrmMain.ComboBox1Change(Sender: TObject);
+procedure TfrmMain.actCascadeExecute(Sender: TObject);
 begin
-    initTimer();
-end;
-
-procedure TfrmMain.ComboBox2Change(Sender: TObject);
-begin
-    initPlace();
+  self.Cascade;
 end;
 
 procedure TfrmMain.FormShow(Sender: TObject);
@@ -103,45 +102,23 @@ begin
 
 end;
 
-procedure TfrmMain.initPlace;
+procedure TfrmMain.actHorizExecute(Sender: TObject);
 begin
-    if (ComboBox1.ItemIndex = 0 ) then
-        self.Cascade;
-
-    if (ComboBox1.ItemIndex = 1 ) then begin
-        TileMode:=tbHorizontal;
-        Tile();
-    end;
-    if (ComboBox1.ItemIndex = 2 ) then begin
-        TileMode:=tbVertical;
-        Tile();
-    end;
-
+    TileMode:=tbHorizontal;
+    Tile();
 end;
 
-procedure TfrmMain.initTimer;
+procedure TfrmMain.actStayOnTopExecute(Sender: TObject);
 begin
-    if (ComboBox1.ItemIndex = 0 ) then
-    begin
-        Timer1.Enabled:=false;
-        exit;
+    if actStayOnTop.Caption='on top: OFF'  then begin
+        actStayOnTop.Caption:='on top: ON';
+        SetWindowPos(Handle, HWND_TOPMOST, 0, 0, 0, 0,SWP_NoMove or SWP_NoSize);
+    end else begin
+        SetWindowPos(Handle, HWND_NOTOPMOST, 0, 0, 0, 0,SWP_NoMove or SWP_NoSize);
+        actStayOnTop.Caption:='on top: OFF';
     end;
-
-    Timer1.Enabled:=true;
-
-    if (ComboBox1.ItemIndex = 1 ) then
-        Timer1.Interval:=2*1000;
-
-    if (ComboBox1.ItemIndex = 2 ) then
-        Timer1.Interval:=5*1000;
-
-    if (ComboBox1.ItemIndex = 3 ) then
-        Timer1.Interval:=10*1000;
-
-    if (ComboBox1.ItemIndex = 4 ) then
-        Timer1.Interval:=60*1000;
-
 end;
+
 
 procedure TfrmMain.MessageToTray(str: string);
 begin

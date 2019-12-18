@@ -22,6 +22,7 @@ type
         procedure createStream;
         procedure freeStream;
         function GetSize: LongInt;
+        procedure addToMemo(s:string);
     public
         constructor Create;
         destructor Destroy; override;
@@ -56,6 +57,11 @@ destructor TView.Destroy;
 begin
     freeStream();
     inherited Destroy;
+end;
+
+procedure TView.addToMemo(s: string);
+begin
+    memo.Lines.Add(Utf8ToAnsi(s));
 end;
 
 function TView.ChangeType: Integer;
@@ -158,7 +164,7 @@ begin
                 cCursor:=cCursor+1;
                 if (aFromRow = -1) or (cCursor > aFromRow) then begin
                     if (outString<>'') then begin
-                        memo.Lines.Add(outString);
+                        self.addToMemo(outString);
                         result:=outString;
                     end;
                     outString:='';
@@ -172,7 +178,7 @@ begin
             cSize:=stream.Read(s,sizeof(s));
         end;
         if (outString<>'') then begin
-            memo.Lines.Add(outString);
+            self.addToMemo(outString);
            result:=outString;
         end;
     except
@@ -180,6 +186,7 @@ begin
 
     freeStream();
 end;
+
 
 procedure TView.Update;
 var

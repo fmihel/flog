@@ -1,10 +1,12 @@
 object frmSetup: TfrmSetup
-  Left = 1182
-  Top = 306
+  Left = 1192
+  Top = 422
+  BorderStyle = bsNone
   Caption = 'Setup'
-  ClientHeight = 562
-  ClientWidth = 429
-  Color = clBtnFace
+  ClientHeight = 365
+  ClientWidth = 293
+  Color = clWindow
+  Ctl3D = False
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -16,15 +18,15 @@ object frmSetup: TfrmSetup
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 24
-    Top = 31
+    Left = 16
+    Top = 23
     Width = 35
     Height = 13
     Caption = 'refresh'
   end
-  object ComboBox1: TComboBox
-    Left = 65
-    Top = 28
+  object cbInterval: TComboBox
+    Left = 57
+    Top = 20
     Width = 101
     Height = 21
     Style = csDropDownList
@@ -32,28 +34,35 @@ object frmSetup: TfrmSetup
     ItemHeight = 13
     ItemIndex = 1
     TabOrder = 0
-    Text = 'refresh: 2 sec'
+    Text = '2 sec'
+    OnChange = cbIntervalChange
     Items.Strings = (
-      'refresh: no'
-      'refresh: 2 sec'
-      'refresh: 5 sec'
-      'refresh: 10 sec'
-      'refresh: 60 sec')
+      'no'
+      '2 sec'
+      '5 sec'
+      '10 sec'
+      '60 sec')
   end
-  object ComboBox2: TComboBox
-    Left = 65
-    Top = 68
-    Width = 106
-    Height = 21
-    Style = csDropDownList
-    Color = 8678491
-    ItemHeight = 13
-    ItemIndex = 0
+  object Panel1: TPanel
+    Left = 0
+    Top = 324
+    Width = 293
+    Height = 41
+    Align = alBottom
+    Caption = 'Panel1'
+    ShowCaption = False
     TabOrder = 1
-    Text = 'place: cascade'
-    Items.Strings = (
-      'place: cascade'
-      'place: vert'
-      'place: horiz')
+    ExplicitLeft = 184
+    ExplicitTop = 224
+    ExplicitWidth = 185
+    object Button1: TButton
+      Left = 210
+      Top = 8
+      Width = 75
+      Height = 25
+      Caption = 'close'
+      TabOrder = 0
+      OnClick = Button1Click
+    end
   end
 end
