@@ -1,7 +1,7 @@
 object frmSetup: TfrmSetup
-  Left = 1192
-  Top = 422
-  BorderStyle = bsNone
+  Left = 894
+  Top = 420
+  BorderStyle = bsDialog
   Caption = 'Setup'
   ClientHeight = 365
   ClientWidth = 293
@@ -15,6 +15,8 @@ object frmSetup: TfrmSetup
   FormStyle = fsStayOnTop
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -25,9 +27,9 @@ object frmSetup: TfrmSetup
     Caption = 'refresh'
   end
   object cbInterval: TComboBox
-    Left = 57
+    Left = 88
     Top = 20
-    Width = 101
+    Width = 70
     Height = 21
     Style = csDropDownList
     Color = 8678491
@@ -52,9 +54,6 @@ object frmSetup: TfrmSetup
     Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 1
-    ExplicitLeft = 184
-    ExplicitTop = 224
-    ExplicitWidth = 185
     object Button1: TButton
       Left = 210
       Top = 8
@@ -64,5 +63,15 @@ object frmSetup: TfrmSetup
       TabOrder = 0
       OnClick = Button1Click
     end
+  end
+  object cbTrayOnMinimize: TCheckBox
+    Left = 16
+    Top = 56
+    Width = 142
+    Height = 17
+    Alignment = taLeftJustify
+    Caption = 'tray on minimize'
+    TabOrder = 2
+    OnClick = cbIntervalChange
   end
 end

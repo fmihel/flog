@@ -5,7 +5,9 @@ uses
   UFormMain in '..\Source\UFormMain.pas' {frmMain},
   UFormView in '..\Source\UFormView.pas' {frmView},
   UClassView in '..\Source\UClassView.pas',
-  UFormSetup in '..\Source\UFormSetup.pas' {frmSetup};
+  UFormSetup in '..\Source\UFormSetup.pas' {frmSetup},
+  UParam in '..\Source\UParam.pas',
+  ULog in '..\Source\ULog.pas';
 
 {$R *.res}
 

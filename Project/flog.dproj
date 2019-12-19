@@ -3,7 +3,7 @@
 			<ProjectGuid>{D6183DD5-4A25-488C-AC5C-82650046D9BC}</ProjectGuid>
 			<ProjectVersion>12.0</ProjectVersion>
 			<MainSource>flog.dpr</MainSource>
-			<Config Condition="'$(Config)'==''">Release</Config>
+			<Config Condition="'$(Config)'==''">Debug</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -53,6 +53,8 @@
 			<DCCReference Include="..\Source\UFormSetup.pas">
 				<Form>frmSetup</Form>
 			</DCCReference>
+			<DCCReference Include="..\Source\UParam.pas"/>
+			<DCCReference Include="..\Source\ULog.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -85,7 +87,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">0</VersionInfo>
 						<VersionInfo Name="Release">3</VersionInfo>
-						<VersionInfo Name="Build">4</VersionInfo>
+						<VersionInfo Name="Build">7</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -97,7 +99,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">fmihel</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">log monitor</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.0.3.4</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.0.3.7</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright">windeco</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>

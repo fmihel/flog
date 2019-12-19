@@ -1,6 +1,6 @@
 object frmMain: TfrmMain
-  Left = 951
-  Top = 96
+  Left = 628
+  Top = 241
   Caption = 'flog'
   ClientHeight = 548
   ClientWidth = 855
@@ -15,6 +15,9 @@ object frmMain: TfrmMain
   OldCreateOrder = False
   Scaled = False
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnPaint = FormPaint
+  OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13

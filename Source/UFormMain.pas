@@ -29,6 +29,7 @@ type
     SpeedButton5: TSpeedButton;
     SpeedButton6: TSpeedButton;
     actStayOnTop: TAction;
+    procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
     procedure actGoToTrayExecute(Sender: TObject);
@@ -38,12 +39,16 @@ type
     procedure FormShow(Sender: TObject);
     procedure actHorizExecute(Sender: TObject);
     procedure actStayOnTopExecute(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
+    procedure FormResize(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
   private
+    procedure _initTimer;
     { Private declarations}
   public
     { Public declarations }
     procedure MessageToTray(str:string);
+    procedure FromParam(sender:TObject);
   end;
 
 var
@@ -52,14 +57,24 @@ var
 implementation
 
 uses
-  UFormSetup;
+  UFormSetup, UParam, ULog;
 
 {$R *.dfm}
 
+procedure TfrmMain.FormDestroy(Sender: TObject);
+begin
+    param.Free;
+end;
+
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
-    frmSetup.initTimer;
+
     actStayOnTopExecute(nil);
+
+    param:=TParam.Create();
+    param.OnChange(FromParam);
+    param.initDefault;
+
 end;
 
 procedure TfrmMain.actAddExecute(Sender: TObject);
@@ -119,6 +134,20 @@ begin
     end;
 end;
 
+procedure TfrmMain.FormPaint(Sender: TObject);
+begin
+    param.initDefault;
+    OnPaint:=nil;
+end;
+
+procedure TfrmMain.FormResize(Sender: TObject);
+begin
+
+   if (WindowState = wsMinimized) then
+        log('min');
+
+end;
+
 
 procedure TfrmMain.MessageToTray(str: string);
 begin
@@ -126,6 +155,36 @@ begin
         TrayIcon1.BalloonHint:=str;
         TrayIcon1.ShowBalloonHint;
     end;
+end;
+
+procedure TfrmMain.FromParam(sender: TObject);
+begin
+    // передаем парметры в компоненты
+    _initTimer();
+end;
+
+procedure TFrmMain._initTimer();
+begin
+    if ( param.IndexOfIntervalRefresh = 0 ) then
+    begin
+        Timer1.Enabled:=false;
+        exit;
+    end;
+
+    Timer1.Enabled:=true;
+
+    if (param.IndexOfIntervalRefresh = 1 ) then
+        Timer1.Interval:=2*1000;
+
+    if (param.IndexOfIntervalRefresh = 2 ) then
+        Timer1.Interval:=5*1000;
+
+    if (param.IndexOfIntervalRefresh = 3 ) then
+        Timer1.Interval:=10*1000;
+
+    if (param.IndexOfIntervalRefresh = 4 ) then
+        Timer1.Interval:=60*1000;
+
 end;
 
 procedure TfrmMain.Timer1Timer(Sender: TObject);

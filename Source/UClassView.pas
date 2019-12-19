@@ -19,10 +19,10 @@ type
         fSize: LongInt;
     protected
         stream: TStream;
+        procedure addToMemo(s:string);
         procedure createStream;
         procedure freeStream;
         function GetSize: LongInt;
-        procedure addToMemo(s:string);
     public
         constructor Create;
         destructor Destroy; override;
@@ -59,7 +59,7 @@ begin
     inherited Destroy;
 end;
 
-procedure TView.addToMemo(s: string);
+procedure TView.addToMemo(s:string);
 begin
     memo.Lines.Add(Utf8ToAnsi(s));
 end;
@@ -187,7 +187,6 @@ begin
     freeStream();
 end;
 
-
 procedure TView.Update;
 var
     cCurrentSize: LongInt;
@@ -208,6 +207,7 @@ begin
         fPosition:=fSize;
     end;
 end;
+
 
 
 

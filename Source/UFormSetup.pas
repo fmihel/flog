@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls;
+  Dialogs, StdCtrls, ExtCtrls, ActnList;
 
 type
   TfrmSetup = class(TForm)
@@ -12,14 +12,20 @@ type
     Label1: TLabel;
     Panel1: TPanel;
     Button1: TButton;
+    cbTrayOnMinimize: TCheckBox;
+    procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure cbIntervalChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    fchange:integer;
+    procedure beginChange;
+    procedure endChange;
+    function canChange:boolean;
   public
     { Public declarations }
-    procedure initTimer();
-
+    procedure FromParam(Sender:TObject);
   end;
 
 var
@@ -27,44 +33,60 @@ var
 
 implementation
 
-uses UFormMain;
+uses UFormMain, UParam;
 
 {$R *.dfm}
+
+procedure TfrmSetup.FormCreate(Sender: TObject);
+begin
+    param.OnChange(FromParam);
+    fchange:=0;
+end;
+
+
+procedure TfrmSetup.beginChange;
+begin
+    fChange:=fChange+1;
+end;
 
 procedure TfrmSetup.Button1Click(Sender: TObject);
 begin
     close;
 end;
 
+function TfrmSetup.canChange: boolean;
+begin
+    result:=fchange = 0;
+end;
+
 procedure TfrmSetup.cbIntervalChange(Sender: TObject);
-var Timer1:TTimer;
 begin
-    Timer1:=frmMain.Timer1;
-    if (cbInterval.ItemIndex = 0 ) then
-    begin
-        Timer1.Enabled:=false;
-        exit;
+    beginChange();
+        param.beginChange();
+        param.IndexOfIntervalRefresh := cbInterval.ItemIndex;
+        param.trayOnMinimize:=cbTrayOnMinimize.Checked;
+        param.endChange();
+    endChange();
+end;
+
+procedure TfrmSetup.endChange;
+begin
+    fChange:=fChange-1;
+end;
+
+procedure TfrmSetup.FormShow(Sender: TObject);
+begin
+    SetWindowPos(Handle, HWND_TOPMOST, 0, 0, 0, 0,SWP_NoMove or SWP_NoSize);
+end;
+
+procedure TfrmSetup.FromParam(Sender: TObject);
+begin
+    if (canChange()) then begin
+        param.beginChange();
+        cbInterval.ItemIndex:=param.IndexOfIntervalRefresh;
+        param.endChange(false);
     end;
-
-    Timer1.Enabled:=true;
-
-    if (cbInterval.ItemIndex = 1 ) then
-        Timer1.Interval:=2*1000;
-
-    if (cbInterval.ItemIndex = 2 ) then
-        Timer1.Interval:=5*1000;
-
-    if (cbInterval.ItemIndex = 3 ) then
-        Timer1.Interval:=10*1000;
-
-    if (cbInterval.ItemIndex = 4 ) then
-        Timer1.Interval:=60*1000;
-
 end;
 
-procedure TfrmSetup.initTimer;
-begin
-
-end;
 
 end.
