@@ -21,14 +21,14 @@ object frmSetup: TfrmSetup
   TextHeight = 13
   object Label1: TLabel
     Left = 16
-    Top = 23
+    Top = 11
     Width = 35
-    Height = 13
+    Height = 21
     Caption = 'refresh'
   end
   object cbInterval: TComboBox
     Left = 88
-    Top = 20
+    Top = 8
     Width = 70
     Height = 21
     Style = csDropDownList
@@ -37,7 +37,7 @@ object frmSetup: TfrmSetup
     ItemIndex = 1
     TabOrder = 0
     Text = '2 sec'
-    OnChange = cbIntervalChange
+    OnChange = CommonChange
     Items.Strings = (
       'no'
       '2 sec'
@@ -66,12 +66,22 @@ object frmSetup: TfrmSetup
   end
   object cbTrayOnMinimize: TCheckBox
     Left = 16
-    Top = 56
+    Top = 43
     Width = 142
     Height = 17
     Alignment = taLeftJustify
     Caption = 'tray on minimize'
     TabOrder = 2
-    OnClick = cbIntervalChange
+    OnClick = CommonChange
+  end
+  object cbAlwaysOnTop: TCheckBox
+    Left = 16
+    Top = 66
+    Width = 142
+    Height = 17
+    Alignment = taLeftJustify
+    Caption = 'always on top'
+    TabOrder = 3
+    OnClick = CommonChange
   end
 end

@@ -13,9 +13,10 @@ type
     Panel1: TPanel;
     Button1: TButton;
     cbTrayOnMinimize: TCheckBox;
+    cbAlwaysOnTop: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
-    procedure cbIntervalChange(Sender: TObject);
+    procedure CommonChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
@@ -26,6 +27,7 @@ type
   public
     { Public declarations }
     procedure FromParam(Sender:TObject);
+    procedure initDefault;
   end;
 
 var
@@ -33,7 +35,7 @@ var
 
 implementation
 
-uses UFormMain, UParam;
+uses UFormMain, UParam, ULog;
 
 {$R *.dfm}
 
@@ -42,7 +44,6 @@ begin
     param.OnChange(FromParam);
     fchange:=0;
 end;
-
 
 procedure TfrmSetup.beginChange;
 begin
@@ -59,14 +60,25 @@ begin
     result:=fchange = 0;
 end;
 
-procedure TfrmSetup.cbIntervalChange(Sender: TObject);
+procedure TfrmSetup.CommonChange(Sender: TObject);
 begin
-    beginChange();
+    if (canChange()) then begin
+        beginChange();
         param.beginChange();
-        param.IndexOfIntervalRefresh := cbInterval.ItemIndex;
-        param.trayOnMinimize:=cbTrayOnMinimize.Checked;
-        param.endChange();
-    endChange();
+        try try
+
+            param.IndexOfIntervalRefresh := cbInterval.ItemIndex;
+            param.trayOnMinimize:=cbTrayOnMinimize.Checked;
+            param.alwaysOnTop:=cbAlwaysOnTop.Checked;
+
+        except on e:Exception do begin
+            log(e.Message,'CommonChange',ClassName);
+        end;end;
+        finally
+            param.endChange();
+            endChange();
+        end;
+    end;
 end;
 
 procedure TfrmSetup.endChange;
@@ -82,11 +94,24 @@ end;
 procedure TfrmSetup.FromParam(Sender: TObject);
 begin
     if (canChange()) then begin
+        beginChange();
         param.beginChange();
+
         cbInterval.ItemIndex:=param.IndexOfIntervalRefresh;
+        cbTrayOnMinimize.Checked:=param.trayOnMinimize;
+        cbAlwaysOnTop.Checked:=param.alwaysOnTop;
+
         param.endChange(false);
+        endChange();
     end;
 end;
 
+
+procedure TfrmSetup.initDefault;
+begin
+    //beginChange();
+    param.initDefault;
+    //endChange();
+end;
 
 end.

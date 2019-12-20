@@ -2,15 +2,30 @@ unit ULog;
 
 interface
 
-procedure log(msg:string);
+procedure log(aMsg:string;aFuncName:string = '';aClassName:string='');
 
 implementation
 
 uses
-  Windows;
+  Windows, Forms;
 
-procedure log(msg:string);
+procedure log(aMsg:string;aFuncName:string = '';aClassName:string='');
+var
+    cMsg:string;
+    cPoint:string;
+    cApp:string;
 begin
-    Windows.OutputDebugString(PWideChar(msg));
+    cApp:=Application.ExeName;
+    if (aClassName<>'') or (aFuncName<>'') then
+        cApp:=cApp+':';
+
+    if (aClassName<>'') and (aFuncName<>'') then
+        cPoint:='.'
+    else
+        cPoint:='';
+
+    cMsg:='{ '+cApp+aClassName+cPoint+aFuncName+' } '+aMsg;
+
+    Windows.OutputDebugString(PWideChar(cMsg));
 end;
 end.

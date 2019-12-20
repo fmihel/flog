@@ -21,12 +21,14 @@ type
 
     TParam = class(TObject)
     private
+        fAlwaysOnTop: Boolean;
         fEvents: TNotifyEvents;
         fIndexOfIntervalRefresh: Integer;
         flock: Integer;
-        ftrayOnMinimize: Boolean;
+        fTrayOnMinimize: Boolean;
+        procedure setAlwaysOnTop(Value: Boolean);
         procedure setIndexOfIntervalRefresh(const Value: Integer);
-        procedure settrayOnMinimize(Value: Boolean);
+        procedure setTrayOnMinimize(Value: Boolean);
     public
         constructor Create;
         destructor Destroy; override;
@@ -35,16 +37,20 @@ type
         procedure endChange(doChangeOnUnlock: Boolean = true);
         procedure initDefault;
         procedure OnChange(aEvent: TNotifyEvent);
+        property AlwaysOnTop: Boolean read fAlwaysOnTop write setAlwaysOnTop;
         property IndexOfIntervalRefresh: Integer read fIndexOfIntervalRefresh
             write setIndexOfIntervalRefresh;
-        property trayOnMinimize: Boolean read ftrayOnMinimize write
-            settrayOnMinimize;
+        property TrayOnMinimize: Boolean read fTrayOnMinimize write
+            setTrayOnMinimize;
     end;
 
 var
     param:TParam;
 
 implementation
+
+uses
+  ULog;
 
 {
 ******************************** TNotifyEvents *********************************
@@ -81,20 +87,20 @@ procedure TNotifyEvents.Change(Sender: TObject);
 var
     i: Integer;
     cEvent: TNotifyEvent;
+
+    const
+        cFuncName = 'Change';
+
 begin
     for i:=0 to fList.Count - 1 do begin
-        try
-        try
+        try try
             cEvent := (Items[i])^;
             if Assigned(cEvent) then
                 cEvent(sender);
 
-        except
-        on e:Exception do
-        begin
-
-        end;
-        end;
+        except on e:Exception do begin
+            log(e.Message,cFuncName,ClassName)
+        end;end;
         finally
 
         end;
@@ -147,9 +153,11 @@ begin
     try try
 
         fIndexOfIntervalRefresh:=2;
-        fTrayOnMinimize:=true;
+        fTrayOnMinimize :=true;
+        fAlwaysOnTop    :=true;
 
     except on e:Exception do begin
+
     end;end;
     finally
 
@@ -163,6 +171,15 @@ begin
     fEvents.Add(aEvent);
 end;
 
+procedure TParam.setAlwaysOnTop(Value: Boolean);
+begin
+    if fAlwaysOnTop <> Value then
+    begin
+        fAlwaysOnTop := Value;
+        change();
+    end;
+end;
+
 procedure TParam.setIndexOfIntervalRefresh(const Value: Integer);
 begin
     if fIndexOfIntervalRefresh <> Value then
@@ -172,11 +189,11 @@ begin
     end;
 end;
 
-procedure TParam.settrayOnMinimize(Value: Boolean);
+procedure TParam.setTrayOnMinimize(Value: Boolean);
 begin
-    if ftrayOnMinimize <> Value then
+    if fTrayOnMinimize <> Value then
     begin
-        ftrayOnMinimize := Value;
+        fTrayOnMinimize := Value;
         change();
     end;
 end;

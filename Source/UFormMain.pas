@@ -20,14 +20,12 @@ type
     actGoToTray: TAction;
     show1: TMenuItem;
     SpeedButton1: TSpeedButton;
-    SpeedButton2: TSpeedButton;
     actSetup: TAction;
     SpeedButton3: TSpeedButton;
     actCascade: TAction;
     actHoriz: TAction;
     SpeedButton4: TSpeedButton;
     SpeedButton5: TSpeedButton;
-    SpeedButton6: TSpeedButton;
     actStayOnTop: TAction;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -38,12 +36,12 @@ type
     procedure actCascadeExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure actHorizExecute(Sender: TObject);
-    procedure actStayOnTopExecute(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
   private
     procedure _initTimer;
+    procedure _initAlwaysOnTop;
     { Private declarations}
   public
     { Public declarations }
@@ -69,11 +67,8 @@ end;
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
 
-    actStayOnTopExecute(nil);
-
     param:=TParam.Create();
     param.OnChange(FromParam);
-    param.initDefault;
 
 end;
 
@@ -98,6 +93,8 @@ begin
     TrayIcon1.Visible:=true;
     Visible:=true;
     Application.ProcessMessages;
+    if (WindowState = wsMinimized) then
+        WindowState:=wsNormal;
 end;
 
 procedure TfrmMain.actSetupExecute(Sender: TObject);
@@ -123,29 +120,17 @@ begin
     Tile();
 end;
 
-procedure TfrmMain.actStayOnTopExecute(Sender: TObject);
-begin
-    if actStayOnTop.Caption='on top: OFF'  then begin
-        actStayOnTop.Caption:='on top: ON';
-        SetWindowPos(Handle, HWND_TOPMOST, 0, 0, 0, 0,SWP_NoMove or SWP_NoSize);
-    end else begin
-        SetWindowPos(Handle, HWND_NOTOPMOST, 0, 0, 0, 0,SWP_NoMove or SWP_NoSize);
-        actStayOnTop.Caption:='on top: OFF';
-    end;
-end;
 
 procedure TfrmMain.FormPaint(Sender: TObject);
 begin
-    param.initDefault;
+    frmSetup.initDefault;
     OnPaint:=nil;
 end;
 
 procedure TfrmMain.FormResize(Sender: TObject);
 begin
-
-   if (WindowState = wsMinimized) then
-        log('min');
-
+    if ((WindowState = wsMinimized) and (param.trayOnMinimize)) then
+        actGoToTrayExecute(Sender);
 end;
 
 
@@ -161,6 +146,7 @@ procedure TfrmMain.FromParam(sender: TObject);
 begin
     // передаем парметры в компоненты
     _initTimer();
+    _initAlwaysOnTop();
 end;
 
 procedure TFrmMain._initTimer();
@@ -185,6 +171,14 @@ begin
     if (param.IndexOfIntervalRefresh = 4 ) then
         Timer1.Interval:=60*1000;
 
+end;
+
+procedure TfrmMain._initAlwaysOnTop();
+begin
+    if param.alwaysOnTop  then
+        SetWindowPos(Handle, HWND_TOPMOST, 0, 0, 0, 0,SWP_NoMove or SWP_NoSize)
+    else
+        SetWindowPos(Handle, HWND_NOTOPMOST, 0, 0, 0, 0,SWP_NoMove or SWP_NoSize);
 end;
 
 procedure TfrmMain.Timer1Timer(Sender: TObject);
