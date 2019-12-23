@@ -23,6 +23,7 @@ type
     private
         fAlwaysOnTop: Boolean;
         fEvents: TNotifyEvents;
+        fFiles: TStringList;
         fIndexOfIntervalRefresh: Integer;
         flock: Integer;
         fTrayOnMinimize: Boolean;
@@ -36,8 +37,11 @@ type
         procedure change;
         procedure endChange(doChangeOnUnlock: Boolean = true);
         procedure initDefault;
+        function LoadFromFile(const aFileName: string): Boolean;
         procedure OnChange(aEvent: TNotifyEvent);
+        function SaveToFile(const aFileName: string): Boolean;
         property AlwaysOnTop: Boolean read fAlwaysOnTop write setAlwaysOnTop;
+        property Files: TStringList read fFiles write fFiles;
         property IndexOfIntervalRefresh: Integer read fIndexOfIntervalRefresh
             write setIndexOfIntervalRefresh;
         property TrayOnMinimize: Boolean read fTrayOnMinimize write
@@ -120,11 +124,13 @@ begin
     inherited Create;
     flock:=0;
     fEvents:=TNotifyEvents.Create();
+    fFiles:=TStringList.Create;
 end;
 
 destructor TParam.Destroy;
 begin
     fEvents.Free;
+    fFiles.Free;
     inherited Destroy;
 end;
 
@@ -166,9 +172,130 @@ begin
     end;
 end;
 
+function TParam.LoadFromFile(const aFileName: string): Boolean;
+var
+    cFile: TStringList;
+    cState: string;
+    cData: string;
+    cName: string;
+    cStr: string;
+    i: Integer;
+
+    procedure Assept(aName:string;aData:string);
+    begin
+        if aName = 'IndexOfIntervalRefresh' then begin
+
+            IndexOfIntervalRefresh:=StrToInt(aData);
+
+        end else if aName = 'TrayOnMinimize' then begin
+
+            TrayOnMinimize:=boolean(StrToInt(aData));
+
+        end else if aName = 'AlwaysOnTop' then begin
+
+            AlwaysOnTop:=boolean(StrToInt(aData));
+
+        end else if aName = 'Files' then begin
+
+            Files.Text:=aData;
+
+        end;
+
+    end;
+
+begin
+    cFile:=TstringList.Create;
+    self.beginChange;
+    {$ifdef _log_} SLog.Stack(ClassName,cFuncName);{$endif}
+    try
+    try
+        cState:='name';
+        cFile.LoadFromFile(aFileName);
+        i:=0;
+        while i<cFile.Count do begin
+            cStr:=cFile.Strings[i];
+
+            if (cState = 'name') then begin
+                cName:=cStr;
+                cState:='data';
+                cData:='';
+            end else if(cState = 'data') then begin
+
+                if (cStr <> '--------------------') then begin
+                    if (cData<>'') then
+                        cData:=cData+#13#10;
+                    cData:=cData+cStr;
+                end else begin
+                    cState:='name';
+                    Assept(cName,cData);
+                end;
+
+            end;
+            inc(i);
+        end;
+
+        result:=true;
+    except
+    on e:Exception do
+    begin
+        log(e.Message,'SaveToFile',ClassName);
+        result:=false;
+    end;
+    end;
+    finally
+        cFile.Free;
+        self.endChange;
+    end;
+end;
+
 procedure TParam.OnChange(aEvent: TNotifyEvent);
 begin
     fEvents.Add(aEvent);
+end;
+
+function TParam.SaveToFile(const aFileName: string): Boolean;
+var
+    cFile: TStringList;
+
+    function tag(aName:string;aData:string):string;
+    begin
+        result:=aName+''+#13#10+''+aData+#13+#10+'--------------------';
+    end;
+    procedure add(aName:string;aData:string);overload;
+    begin
+        cFile.Add(tag(aName,aData));
+    end;
+    procedure add(aName:string;aData:integer);overload;
+    begin
+        add(aName,IntToStr(aData));
+    end;
+    procedure add(aName:string;aData:boolean);overload;
+    begin
+        add(aName,IntToStr(integer(aData)));
+    end;
+
+begin
+    cFile:=TstringList.Create;
+    {$ifdef _log_} SLog.Stack(ClassName,cFuncName);{$endif}
+    try
+    try
+        add('IndexOfIntervalRefresh',IndexOfIntervalRefresh);
+        add('TrayOnMinimize',TrayOnMinimize);
+        add('AlwaysOnTop',AlwaysOnTop);
+        add('Files',Files.Text);
+        cFile.SaveToFile(aFileName);
+
+        result:=true;
+    except
+    on e:Exception do
+    begin
+        log(e.Message,'SaveToFile',ClassName);
+        result:=false;
+    end;
+    end;
+    finally
+        cFile.Free;
+    end;
 end;
 
 procedure TParam.setAlwaysOnTop(Value: Boolean);

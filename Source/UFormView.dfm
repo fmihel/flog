@@ -1,9 +1,9 @@
 object frmView: TfrmView
-  Left = 2727
-  Top = 718
+  Left = 3151
+  Top = 307
   Caption = 'frmView'
-  ClientHeight = 269
-  ClientWidth = 1082
+  ClientHeight = 681
+  ClientWidth = 652
   Color = clWindow
   Ctl3D = False
   Font.Charset = DEFAULT_CHARSET
@@ -22,8 +22,8 @@ object frmView: TfrmView
   object Memo: TMemo
     Left = 0
     Top = 0
-    Width = 1082
-    Height = 269
+    Width = 652
+    Height = 681
     Align = alClient
     Color = 4142124
     Font.Charset = RUSSIAN_CHARSET
@@ -51,6 +51,8 @@ object frmView: TfrmView
     ScrollBars = ssBoth
     TabOrder = 0
     WordWrap = False
+    ExplicitWidth = 1082
+    ExplicitHeight = 269
   end
   object ActionManager1: TActionManager
     Left = 704

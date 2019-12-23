@@ -45,6 +45,7 @@ type
     { Private declarations}
   public
     { Public declarations }
+    IniFile:string;
     procedure MessageToTray(str:string);
     procedure FromParam(sender:TObject);
   end;
@@ -61,15 +62,15 @@ uses
 
 procedure TfrmMain.FormDestroy(Sender: TObject);
 begin
+    param.SaveToFile(IniFile);
     param.Free;
 end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
-
+    IniFile:=ExtractFilePath(Application.ExeName)+'flog.ini';
     param:=TParam.Create();
     param.OnChange(FromParam);
-
 end;
 
 procedure TfrmMain.actAddExecute(Sender: TObject);
@@ -79,6 +80,7 @@ begin
     begin
         view:=TfrmView.Create(self);
         view.LoadFile(OpenDialog1.FileName);
+        param.Files.Add(OpenDialog1.FileName);
     end;
 end;
 
@@ -120,10 +122,30 @@ begin
     Tile();
 end;
 
-
 procedure TfrmMain.FormPaint(Sender: TObject);
+var
+    i:integer;
+    view:TfrmView;
+    cFile:string;
 begin
-    frmSetup.initDefault;
+    if not param.LoadFromFile(IniFile) then
+        frmSetup.initDefault
+    else begin
+        for i:=0 to param.Files.Count - 1 do begin
+            cFile:=param.Files.Strings[i];
+            if (FileExists(cFile)) then begin
+                view:=TfrmView.Create(self);
+                view.LoadFile(cFile);
+            end;
+        end;
+        if self.MDIChildCount = 1 then begin
+            self.MDIChildren[0].WindowState:=wsMaximized;
+        end else if self.MDIChildCount > 1 then begin
+            TileMode:=tbHorizontal;
+            Tile();
+        end;
+
+    end;
     OnPaint:=nil;
 end;
 

@@ -1,6 +1,6 @@
 object frmMain: TfrmMain
-  Left = 2270
-  Top = 204
+  Left = 938
+  Top = 419
   Caption = 'flog'
   ClientHeight = 548
   ClientWidth = 855

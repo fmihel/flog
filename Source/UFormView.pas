@@ -38,7 +38,7 @@ var
 implementation
 
 uses
-  UFormMain;
+  UFormMain, ULog, UParam;
 
 {$R *.dfm}
 
@@ -71,8 +71,12 @@ begin
 end;
 
 procedure TfrmView.FormClose(Sender: TObject; var Action: TCloseAction);
+var i:integer;
 begin
     Action:=caFree;
+    i:=param.Files.IndexOf(Caption);
+    if (i>=0) then
+        param.Files.Delete(i);
 end;
 
 procedure TfrmView.FormDestroy(Sender: TObject);
