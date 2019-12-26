@@ -27,6 +27,9 @@ type
     SpeedButton4: TSpeedButton;
     SpeedButton5: TSpeedButton;
     actStayOnTop: TAction;
+    SpeedButton2: TSpeedButton;
+    actClear: TAction;
+    clear1: TMenuItem;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
@@ -34,6 +37,7 @@ type
     procedure actReturnFromTrayExecute(Sender: TObject);
     procedure actSetupExecute(Sender: TObject);
     procedure actCascadeExecute(Sender: TObject);
+    procedure actClearExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure actHorizExecute(Sender: TObject);
     procedure FormPaint(Sender: TObject);
@@ -109,9 +113,22 @@ begin
   self.Cascade;
 end;
 
+procedure TfrmMain.actClearExecute(Sender: TObject);
+var
+  child: TForm;
+  i: Integer;
+begin
+    for i:=0 to self.MDIChildCount-1 do begin
+        child:=self.MDIChildren[i];
+        TfrmView(child).actClearExecute(Sender);
+    end;
+
+
+end;
+
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
-    Color:=$003F342C;
+    Color:=$001E1E1E;
     self.BringToFront;
 
 end;

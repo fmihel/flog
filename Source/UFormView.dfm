@@ -1,9 +1,9 @@
 object frmView: TfrmView
-  Left = 3151
-  Top = 307
+  Left = 2610
+  Top = 304
   Caption = 'frmView'
   ClientHeight = 681
-  ClientWidth = 652
+  ClientWidth = 744
   Color = clWindow
   Ctl3D = False
   Font.Charset = DEFAULT_CHARSET
@@ -22,10 +22,10 @@ object frmView: TfrmView
   object Memo: TMemo
     Left = 0
     Top = 0
-    Width = 652
+    Width = 744
     Height = 681
     Align = alClient
-    Color = 4142124
+    Color = 1973790
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = 14341071
     Font.Height = -13
@@ -51,12 +51,11 @@ object frmView: TfrmView
     ScrollBars = ssBoth
     TabOrder = 0
     WordWrap = False
-    ExplicitWidth = 1082
-    ExplicitHeight = 269
+    ExplicitWidth = 652
   end
   object ActionManager1: TActionManager
-    Left = 704
-    Top = 104
+    Left = 56
+    Top = 192
     StyleName = 'Platform Default'
     object actClose: TAction
       Caption = 'close'
@@ -68,8 +67,8 @@ object frmView: TfrmView
     end
   end
   object PopupMenu1: TPopupMenu
-    Left = 592
-    Top = 120
+    Left = 64
+    Top = 88
     object clear1: TMenuItem
       Action = actClear
     end
