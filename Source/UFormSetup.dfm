@@ -23,7 +23,7 @@ object frmSetup: TfrmSetup
     Left = 16
     Top = 11
     Width = 35
-    Height = 21
+    Height = 13
     Caption = 'refresh'
   end
   object cbInterval: TComboBox
@@ -34,12 +34,13 @@ object frmSetup: TfrmSetup
     Style = csDropDownList
     Color = 8678491
     ItemHeight = 13
-    ItemIndex = 1
+    ItemIndex = 2
     TabOrder = 0
     Text = '2 sec'
     OnChange = CommonChange
     Items.Strings = (
       'no'
+      '1 sec'
       '2 sec'
       '5 sec'
       '10 sec'

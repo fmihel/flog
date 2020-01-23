@@ -17,6 +17,7 @@ type
         fPosition: LongInt;
         fPreloadCount: Integer;
         fSize: LongInt;
+    function ExTrim(str: string): string;
     protected
         stream: TStream;
         procedure addToMemo(s:string);
@@ -142,14 +143,33 @@ begin
     end;
 end;
 
+function TView.ExTrim(str:string): string;
+var space:string;
+begin
+
+    space:='[<'+IntToStr(random(1000))+'space'+IntToStr(random(1000))+'>]';
+    result:=StringReplace(str,' ',space,[rfReplaceAll, rfIgnoreCase]);
+    result:=StringReplace(Trim(result),space,' ',[rfReplaceAll, rfIgnoreCase]);
+
+end;
+
+
 function TView.Read(aFromRow: Integer = -1): string;
+const cMaxCount = 5; // максимальное кол-во строк отображаемое а хинте
 var
+    cCount: Integer;
+
     s: AnsiChar;
     cSize: LongInt;
     cCursor: Integer;
     outString: string;
+    cResult:TStringList;   /// список строк для отображения в хинте
+    i:integer;
+
+
 begin
     createStream();
+    cResult:=TStringList.Create;
     try
         cCursor:=0;
         outString:='';
@@ -163,9 +183,15 @@ begin
             if (Ord(s) = 10) then begin
                 cCursor:=cCursor+1;
                 if (aFromRow = -1) or (cCursor > aFromRow) then begin
+
                     if (outString<>'') then begin
                         self.addToMemo(outString);
-                        result:=outString;
+                        //result:=outString;
+                        if (Trim(outString)<>'') then begin
+                            cResult.Add(ExTrim(outString));
+                            if cResult.Count>cMaxCount then
+                                cResult.Delete(0);
+                        end;
                     end;
                     outString:='';
 
@@ -179,11 +205,31 @@ begin
         end;
         if (outString<>'') then begin
             self.addToMemo(outString);
-           result:=outString;
+           //result:=outString;
+            if (Trim(outString)<>'') then begin
+                cResult.Add(ExTrim(outString));
+
+                if cResult.Count>cMaxCount then
+                    cResult.Delete(0);
+            end;
         end;
+
+        // формируем спиоск строк к отображению в хинте
+        cCount:=cMaxCount;
+        if (cResult.Count<cCount) then
+            cCount:=cResult.Count;
+        for i := 0 to cCount-1 do begin
+            if (i>0) then
+                result:=result+#13#10;
+            result:=result+cResult.Strings[i];
+        end;
+        // ----------------------------------------
+
     except
+
     end;
 
+    cResult.Free;
     freeStream();
 end;
 

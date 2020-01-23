@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UFormView, StdCtrls, ExtCtrls, ToolWin, ComCtrls,
-  PlatformDefaultStyleActnCtrls, ActnList, ActnMan, Menus, Buttons;
+  PlatformDefaultStyleActnCtrls, ActnList, ActnMan, Menus, Buttons,
+  AppEvnts;
 
 type
   TfrmMain = class(TForm)
@@ -30,6 +31,7 @@ type
     SpeedButton2: TSpeedButton;
     actClear: TAction;
     clear1: TMenuItem;
+    ApplicationEvents1: TApplicationEvents;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
@@ -40,6 +42,8 @@ type
     procedure actClearExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure actHorizExecute(Sender: TObject);
+    procedure ApplicationEvents1Activate(Sender: TObject);
+    procedure ApplicationEvents1Deactivate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -50,8 +54,10 @@ type
   public
     { Public declarations }
     IniFile:string;
+    LastFormPlaceMode:string;
     procedure MessageToTray(str:string);
     procedure FromParam(sender:TObject);
+    procedure DoActivate(Sender:TObject;Activate:boolean);
   end;
 
 var
@@ -72,6 +78,7 @@ end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
+    LastFormPlaceMode:='';
     IniFile:=ExtractFilePath(Application.ExeName)+'flog.ini';
     param:=TParam.Create();
     param.OnChange(FromParam);
@@ -111,6 +118,8 @@ end;
 procedure TfrmMain.actCascadeExecute(Sender: TObject);
 begin
   self.Cascade;
+  LastFormPlaceMode:='Cascade';
+
 end;
 
 procedure TfrmMain.actClearExecute(Sender: TObject);
@@ -130,13 +139,48 @@ procedure TfrmMain.FormShow(Sender: TObject);
 begin
     Color:=$001E1E1E;
     self.BringToFront;
-
 end;
 
 procedure TfrmMain.actHorizExecute(Sender: TObject);
 begin
     TileMode:=tbHorizontal;
     Tile();
+    LastFormPlaceMode:='TileHorizontal';
+end;
+
+procedure TfrmMain.ApplicationEvents1Activate(Sender: TObject);
+begin
+    DoActivate(Sender,true);
+end;
+
+procedure TfrmMain.ApplicationEvents1Deactivate(Sender: TObject);
+begin
+    DoActivate(Sender,false);
+end;
+
+procedure TfrmMain.DoActivate(Sender: TObject; Activate: boolean);
+var
+  child: TForm;
+  i: Integer;
+begin
+    if Activate then begin
+        BorderStyle:=bsSizeable;
+        Panel1.Visible:=true;
+    end else begin
+        BorderStyle:=bsNone;
+        Panel1.Visible:=false;
+    end;
+
+    for i:=0 to self.MDIChildCount-1 do begin
+        child:=self.MDIChildren[i];
+        TfrmView(child).DoActivate(Sender,Activate);
+    end;
+
+    if (LastFormPlaceMode = 'TileHorizontal') then
+        actHoriz.Execute()
+    else if (LastFormPlaceMode = 'Cascade') then
+        actCascade.Execute();
+
 end;
 
 procedure TfrmMain.FormPaint(Sender: TObject);
@@ -158,8 +202,7 @@ begin
         if self.MDIChildCount = 1 then begin
             self.MDIChildren[0].WindowState:=wsMaximized;
         end else if self.MDIChildCount > 1 then begin
-            TileMode:=tbHorizontal;
-            Tile();
+            actHoriz.Execute();
         end;
 
     end;
@@ -174,8 +217,14 @@ end;
 
 
 procedure TfrmMain.MessageToTray(str: string);
+var cLen:integer;
 begin
+
+
     if (not Visible) then begin
+        clen:=Length(Str);
+        if (cLen>255) then
+            str:=copy(str,cLen-255+1,255);
         TrayIcon1.BalloonHint:=str;
         TrayIcon1.ShowBalloonHint;
     end;
@@ -199,15 +248,18 @@ begin
     Timer1.Enabled:=true;
 
     if (param.IndexOfIntervalRefresh = 1 ) then
-        Timer1.Interval:=2*1000;
+        Timer1.Interval:=1*1000;
 
     if (param.IndexOfIntervalRefresh = 2 ) then
-        Timer1.Interval:=5*1000;
+        Timer1.Interval:=2*1000;
 
     if (param.IndexOfIntervalRefresh = 3 ) then
-        Timer1.Interval:=10*1000;
+        Timer1.Interval:=5*1000;
 
     if (param.IndexOfIntervalRefresh = 4 ) then
+        Timer1.Interval:=10*1000;
+
+    if (param.IndexOfIntervalRefresh = 5 ) then
         Timer1.Interval:=60*1000;
 
 end;

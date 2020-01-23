@@ -4,7 +4,7 @@ object frmMain: TfrmMain
   Caption = 'flog'
   ClientHeight = 548
   ClientWidth = 855
-  Color = 1973790
+  Color = clAppWorkSpace
   Ctl3D = False
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -399,5 +399,11 @@ object frmMain: TfrmMain
       Action = actClear
       Caption = 'clear'
     end
+  end
+  object ApplicationEvents1: TApplicationEvents
+    OnActivate = ApplicationEvents1Activate
+    OnDeactivate = ApplicationEvents1Deactivate
+    Left = 72
+    Top = 184
   end
 end

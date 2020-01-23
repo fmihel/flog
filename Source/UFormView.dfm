@@ -1,6 +1,6 @@
 object frmView: TfrmView
-  Left = 2610
-  Top = 304
+  Left = 339
+  Top = 174
   Caption = 'frmView'
   ClientHeight = 681
   ClientWidth = 744
@@ -17,6 +17,7 @@ object frmView: TfrmView
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
   object Memo: TMemo
@@ -51,7 +52,34 @@ object frmView: TfrmView
     ScrollBars = ssBoth
     TabOrder = 0
     WordWrap = False
-    ExplicitWidth = 652
+    ExplicitLeft = -8
+  end
+  object PanelName: TPanel
+    Left = 560
+    Top = 56
+    Width = 137
+    Height = 25
+    BevelOuter = bvNone
+    BorderStyle = bsSingle
+    Caption = 'PanelName'
+    Color = 1973790
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = 16171150
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentBackground = False
+    ParentFont = False
+    ShowCaption = False
+    TabOrder = 1
+    Visible = False
+    object PanelNameText: TLabel
+      Left = 6
+      Top = 5
+      Width = 53
+      Height = 13
+      Caption = 'PanelName'
+    end
   end
   object ActionManager1: TActionManager
     Left = 56

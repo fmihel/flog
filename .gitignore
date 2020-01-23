@@ -69,3 +69,4 @@ __recovery/
 modules/
 test_data/
 release/
+debug/
