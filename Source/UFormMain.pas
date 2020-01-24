@@ -48,6 +48,8 @@ type
     procedure FormResize(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
   private
+    fXPos:integer;
+    fYPos:integer;
     procedure _initTimer;
     procedure _initAlwaysOnTop;
     { Private declarations}
@@ -55,9 +57,12 @@ type
     { Public declarations }
     IniFile:string;
     LastFormPlaceMode:string;
+
     procedure MessageToTray(str:string);
     procedure FromParam(sender:TObject);
     procedure DoActivate(Sender:TObject;Activate:boolean);
+    procedure StoryPos;
+    procedure ReStoryPos;
   end;
 
 var
@@ -106,8 +111,10 @@ begin
     TrayIcon1.Visible:=true;
     Visible:=true;
     Application.ProcessMessages;
-    if (WindowState = wsMinimized) then
+    if (WindowState = wsMinimized) then begin
         WindowState:=wsNormal;
+        ReStoryPos;
+    end;
 end;
 
 procedure TfrmMain.actSetupExecute(Sender: TObject);
@@ -204,23 +211,22 @@ begin
         end else if self.MDIChildCount > 1 then begin
             actHoriz.Execute();
         end;
-
     end;
     OnPaint:=nil;
 end;
 
 procedure TfrmMain.FormResize(Sender: TObject);
 begin
-    if ((WindowState = wsMinimized) and (param.trayOnMinimize)) then
+    if ((WindowState = wsMinimized) and (param.trayOnMinimize)) then begin
+        StoryPos();
         actGoToTrayExecute(Sender);
+    end;
 end;
 
 
 procedure TfrmMain.MessageToTray(str: string);
 var cLen:integer;
 begin
-
-
     if (not Visible) then begin
         clen:=Length(Str);
         if (cLen>255) then
@@ -230,12 +236,26 @@ begin
     end;
 end;
 
+
+procedure TfrmMain.ReStoryPos;
+begin
+    Left:=fXPos;
+    Top:=fYPos;
+end;
+
+procedure TfrmMain.StoryPos;
+begin
+    fXPos:=Left;
+    fYPos:=Top;
+end;
+
 procedure TfrmMain.FromParam(sender: TObject);
 begin
     // передаем парметры в компоненты
     _initTimer();
     _initAlwaysOnTop();
 end;
+
 
 procedure TFrmMain._initTimer();
 begin

@@ -1,6 +1,7 @@
 object frmMain: TfrmMain
   Left = 182
   Top = 359
+  VertScrollBar.ParentColor = False
   Caption = 'flog'
   ClientHeight = 548
   ClientWidth = 855
