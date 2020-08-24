@@ -32,6 +32,11 @@ type
     actClear: TAction;
     clear1: TMenuItem;
     ApplicationEvents1: TApplicationEvents;
+    actShowBorder: TAction;
+    actHideBorder: TAction;
+    SpeedButton6: TSpeedButton;
+    PanelReSize: TPanel;
+    Image1: TImage;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
@@ -42,14 +47,29 @@ type
     procedure actClearExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure actHorizExecute(Sender: TObject);
+    procedure actShowBorderExecute(Sender: TObject);
+    procedure actHideBorderExecute(Sender: TObject);
     procedure ApplicationEvents1Activate(Sender: TObject);
     procedure ApplicationEvents1Deactivate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure PanelReSizeMouseDown(Sender: TObject; Button: TMouseButton; Shift:
+        TShiftState; X, Y: Integer);
+    procedure PanelReSizeMouseMove(Sender: TObject; Shift: TShiftState; X, Y:
+        Integer);
+    procedure PanelReSizeMouseUp(Sender: TObject; Button: TMouseButton; Shift:
+        TShiftState; X, Y: Integer);
     procedure Timer1Timer(Sender: TObject);
   private
     fXPos:integer;
     fYPos:integer;
+
+    fSizing:boolean;
+    fSizeX:integer;
+    fSizeY:integer;
+    fSizeW:integer;
+    fSizeH:integer;
+
     procedure _initTimer;
     procedure _initAlwaysOnTop;
     { Private declarations}
@@ -83,6 +103,7 @@ end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
+    fSizing:=false;
     LastFormPlaceMode:='';
     IniFile:=ExtractFilePath(Application.ExeName)+'flog.ini';
     param:=TParam.Create();
@@ -155,14 +176,25 @@ begin
     LastFormPlaceMode:='TileHorizontal';
 end;
 
+procedure TfrmMain.actShowBorderExecute(Sender: TObject);
+begin
+   DoActivate(Sender,true);
+
+end;
+
+procedure TfrmMain.actHideBorderExecute(Sender: TObject);
+begin
+    DoActivate(Sender,false);
+end;
+
 procedure TfrmMain.ApplicationEvents1Activate(Sender: TObject);
 begin
-    DoActivate(Sender,true);
+    //DoActivate(Sender,true);
 end;
 
 procedure TfrmMain.ApplicationEvents1Deactivate(Sender: TObject);
 begin
-    DoActivate(Sender,false);
+    //DoActivate(Sender,false);
 end;
 
 procedure TfrmMain.DoActivate(Sender: TObject; Activate: boolean);
@@ -173,9 +205,11 @@ begin
     if Activate then begin
         BorderStyle:=bsSizeable;
         Panel1.Visible:=true;
+        PanelResize.Visible:=false;
     end else begin
         BorderStyle:=bsNone;
         Panel1.Visible:=false;
+        PanelResize.Visible:=true;
     end;
 
     for i:=0 to self.MDIChildCount-1 do begin
@@ -254,6 +288,31 @@ begin
     // передаем парметры в компоненты
     _initTimer();
     _initAlwaysOnTop();
+end;
+
+procedure TfrmMain.PanelReSizeMouseDown(Sender: TObject; Button: TMouseButton;
+    Shift: TShiftState; X, Y: Integer);
+begin
+    fSizing:=true;
+    fSizeX:=Mouse.CursorPos.X;
+    fSizeY:=Mouse.CursorPos.Y;
+    fSizeW:=Width;
+    fSizeH:=Height;
+end;
+
+procedure TfrmMain.PanelReSizeMouseMove(Sender: TObject; Shift: TShiftState; X,
+    Y: Integer);
+begin
+    if fSizing then begin
+        frmMain.Width:=fSizeW+(Mouse.CursorPos.X - fSizeX);
+        frmMain.Height:=fSizeH+(Mouse.CursorPos.Y - fSizeY);
+    end;
+end;
+
+procedure TfrmMain.PanelReSizeMouseUp(Sender: TObject; Button: TMouseButton;
+    Shift: TShiftState; X, Y: Integer);
+begin
+    fSizing:=false;
 end;
 
 
