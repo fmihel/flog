@@ -17,11 +17,11 @@ type
     close1: TMenuItem;
     actClear: TAction;
     clear1: TMenuItem;
-    N1: TMenuItem;
     PanelName: TPanel;
     PanelNameText: TLabel;
     SpeedButton6: TSpeedButton;
     Timer1: TTimer;
+    SpeedButton7: TSpeedButton;
     procedure actClearExecute(Sender: TObject);
     procedure actCloseExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UFormView, StdCtrls, ExtCtrls, ToolWin, ComCtrls,
   PlatformDefaultStyleActnCtrls, ActnList, ActnMan, Menus, Buttons,
-  AppEvnts;
+  AppEvnts, ImgList;
 
 type
   TfrmMain = class(TForm)
@@ -37,6 +37,8 @@ type
     SpeedButton6: TSpeedButton;
     PanelReSize: TPanel;
     Image1: TImage;
+    SpeedButton7: TSpeedButton;
+    ImageList1: TImageList;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
