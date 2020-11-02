@@ -17,7 +17,7 @@ type
         fPosition: LongInt;
         fPreloadCount: Integer;
         fSize: LongInt;
-    function ExTrim(str: string): string;
+        function ExTrim(str: string): string;
     protected
         stream: TStream;
         procedure addToMemo(s:string);
@@ -73,6 +73,17 @@ procedure TView.createStream;
 begin
     stream:=TFileStream.Create(FileName,fmOpenRead);
     //TFileStream(stream).LoadFromFile(FileName,fmOpenRead);
+end;
+
+function TView.ExTrim(str: string): string;
+var
+    space: string;
+begin
+
+    space:='[<'+IntToStr(random(1000))+'space'+IntToStr(random(1000))+'>]';
+    result:=StringReplace(str,' ',space,[rfReplaceAll, rfIgnoreCase]);
+    result:=StringReplace(Trim(result),space,' ',[rfReplaceAll, rfIgnoreCase]);
+
 end;
 
 procedure TView.freeStream;
@@ -143,29 +154,18 @@ begin
     end;
 end;
 
-function TView.ExTrim(str:string): string;
-var space:string;
-begin
-
-    space:='[<'+IntToStr(random(1000))+'space'+IntToStr(random(1000))+'>]';
-    result:=StringReplace(str,' ',space,[rfReplaceAll, rfIgnoreCase]);
-    result:=StringReplace(Trim(result),space,' ',[rfReplaceAll, rfIgnoreCase]);
-
-end;
-
-
 function TView.Read(aFromRow: Integer = -1): string;
-const cMaxCount = 5; // максимальное кол-во строк отображаемое а хинте
-var
-    cCount: Integer;
 
-    s: AnsiChar;
-    cSize: LongInt;
-    cCursor: Integer;
-    outString: string;
-    cResult:TStringList;   /// список строк для отображения в хинте
-    i:integer;
+    const cMaxCount = 5; // максимальное кол-во строк отображаемое а хинте
+    var
+        cCount: Integer;
 
+        s: AnsiChar;
+        cSize: LongInt;
+        cCursor: Integer;
+        outString: string;
+        cResult:TStringList;   /// список строк для отображения в хинте
+        i:integer;
 
 begin
     createStream();
@@ -253,6 +253,7 @@ begin
         fPosition:=fSize;
     end;
 end;
+
 
 
 

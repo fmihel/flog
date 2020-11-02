@@ -27,7 +27,7 @@
 #
 
 # Delphi compiler-generated binaries (safe to delete)
-*.exe
+*._exe
 *.dll
 *.bpl
 *.bpi
@@ -68,5 +68,5 @@ __recovery/
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
 test_data/
-release/
+release/flog.ini
 debug/

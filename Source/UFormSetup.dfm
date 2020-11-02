@@ -85,4 +85,14 @@ object frmSetup: TfrmSetup
     TabOrder = 3
     OnClick = CommonChange
   end
+  object cbHideScrollBarOnInActive: TCheckBox
+    Left = 16
+    Top = 89
+    Width = 142
+    Height = 17
+    Alignment = taLeftJustify
+    Caption = 'hide scrollbar on inactive'
+    TabOrder = 4
+    OnClick = CommonChange
+  end
 end

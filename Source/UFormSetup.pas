@@ -14,6 +14,7 @@ type
     Button1: TButton;
     cbTrayOnMinimize: TCheckBox;
     cbAlwaysOnTop: TCheckBox;
+    cbHideScrollBarOnInActive: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure CommonChange(Sender: TObject);
@@ -70,6 +71,7 @@ begin
             param.IndexOfIntervalRefresh := cbInterval.ItemIndex;
             param.trayOnMinimize:=cbTrayOnMinimize.Checked;
             param.alwaysOnTop:=cbAlwaysOnTop.Checked;
+            param.HideScrollBarOnInActive:=cbHideScrollBarOnInActive.Checked;
 
         except on e:Exception do begin
             log(e.Message,'CommonChange',ClassName);
@@ -100,6 +102,7 @@ begin
         cbInterval.ItemIndex:=param.IndexOfIntervalRefresh;
         cbTrayOnMinimize.Checked:=param.trayOnMinimize;
         cbAlwaysOnTop.Checked:=param.alwaysOnTop;
+        cbHideScrollBarOnInActive.Checked := param.HideScrollBarOnInActive;
 
         param.endChange(false);
         endChange();

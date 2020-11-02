@@ -112,6 +112,7 @@ end;
 procedure TfrmView.actCloseExecute(Sender: TObject);
 begin
     close;
+    frmMain.actShowBorder.Execute;
 end;
 
 procedure TfrmView.DoActivate(Sender: TObject; Activate: boolean);
@@ -213,7 +214,7 @@ begin
     if PanelName.Visible then begin
 
         if (MouseOnCtrl(self))  then begin
-
+             //if (param.HideScrollBarOnInActive) then
              if ( (Memo.ScrollBars=ssNone) and (GetVisibleLineCount(Memo) < Memo.Lines.Count) ) then begin
                 TopLine:=Memo.Perform(EM_GETFIRSTVISIBLELINE, 0, 0);
                 Memo.ScrollBars:=ssBoth;
@@ -221,6 +222,7 @@ begin
                 AlignPanel;
              end;
         end else begin
+             if (param.HideScrollBarOnInActive) then
              if (Memo.ScrollBars=ssBoth) then begin
                 TopLine:=Memo.Perform(EM_GETFIRSTVISIBLELINE, 0, 0);
                 Memo.ScrollBars:=ssNone;

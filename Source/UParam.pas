@@ -24,10 +24,12 @@ type
         fAlwaysOnTop: Boolean;
         fEvents: TNotifyEvents;
         fFiles: TStringList;
+        fHideScrollBarOnInActive: Boolean;
         fIndexOfIntervalRefresh: Integer;
         flock: Integer;
         fTrayOnMinimize: Boolean;
         procedure setAlwaysOnTop(Value: Boolean);
+        procedure setHideScrollBarOnInActive(Value: Boolean);
         procedure setIndexOfIntervalRefresh(const Value: Integer);
         procedure setTrayOnMinimize(Value: Boolean);
     public
@@ -42,6 +44,8 @@ type
         function SaveToFile(const aFileName: string): Boolean;
         property AlwaysOnTop: Boolean read fAlwaysOnTop write setAlwaysOnTop;
         property Files: TStringList read fFiles write fFiles;
+        property HideScrollBarOnInActive: Boolean read fHideScrollBarOnInActive
+            write setHideScrollBarOnInActive;
         property IndexOfIntervalRefresh: Integer read fIndexOfIntervalRefresh
             write setIndexOfIntervalRefresh;
         property TrayOnMinimize: Boolean read fTrayOnMinimize write
@@ -161,6 +165,7 @@ begin
         fIndexOfIntervalRefresh:=2;
         fTrayOnMinimize :=true;
         fAlwaysOnTop    :=true;
+        fHideScrollBarOnInActive:=true;
 
     except on e:Exception do begin
 
@@ -194,6 +199,10 @@ var
         end else if aName = 'AlwaysOnTop' then begin
 
             AlwaysOnTop:=boolean(StrToInt(aData));
+
+        end else if aName = 'HideScrollBarOnInActive' then begin
+
+            HideScrollBarOnInActive:=boolean(StrToInt(aData));
 
         end else if aName = 'Files' then begin
 
@@ -282,6 +291,7 @@ begin
         add('IndexOfIntervalRefresh',IndexOfIntervalRefresh);
         add('TrayOnMinimize',TrayOnMinimize);
         add('AlwaysOnTop',AlwaysOnTop);
+        add('HideScrollBarOnInActive',HideScrollBarOnInActive);
         add('Files',Files.Text);
         cFile.SaveToFile(aFileName);
 
@@ -304,6 +314,15 @@ begin
     begin
         fAlwaysOnTop := Value;
         change();
+    end;
+end;
+
+procedure TParam.setHideScrollBarOnInActive(Value: Boolean);
+begin
+    if fHideScrollBarOnInActive <> Value then
+    begin
+        fHideScrollBarOnInActive := Value;
+        Change();
     end;
 end;
 
