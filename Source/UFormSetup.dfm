@@ -5,7 +5,7 @@ object frmSetup: TfrmSetup
   Caption = 'Setup'
   ClientHeight = 365
   ClientWidth = 293
-  Color = clWindow
+  Color = clGray
   Ctl3D = False
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -26,13 +26,20 @@ object frmSetup: TfrmSetup
     Height = 13
     Caption = 'refresh'
   end
+  object Label2: TLabel
+    Left = 16
+    Top = 115
+    Width = 69
+    Height = 13
+    Caption = 'clear after idle'
+  end
   object cbInterval: TComboBox
     Left = 88
     Top = 8
     Width = 70
     Height = 21
     Style = csDropDownList
-    Color = 8678491
+    Color = clGray
     ItemHeight = 13
     ItemIndex = 2
     TabOrder = 0
@@ -52,6 +59,8 @@ object frmSetup: TfrmSetup
     Width = 293
     Height = 41
     Align = alBottom
+    BevelOuter = bvNone
+    BorderStyle = bsSingle
     Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 1
@@ -67,7 +76,7 @@ object frmSetup: TfrmSetup
   end
   object cbTrayOnMinimize: TCheckBox
     Left = 16
-    Top = 43
+    Top = 35
     Width = 142
     Height = 17
     Alignment = taLeftJustify
@@ -77,7 +86,7 @@ object frmSetup: TfrmSetup
   end
   object cbAlwaysOnTop: TCheckBox
     Left = 16
-    Top = 66
+    Top = 58
     Width = 142
     Height = 17
     Alignment = taLeftJustify
@@ -87,12 +96,36 @@ object frmSetup: TfrmSetup
   end
   object cbHideScrollBarOnInActive: TCheckBox
     Left = 16
-    Top = 89
+    Top = 81
     Width = 142
     Height = 17
     Alignment = taLeftJustify
     Caption = 'hide scrollbar on inactive'
     TabOrder = 4
     OnClick = CommonChange
+  end
+  object cbClearOnIdle: TComboBox
+    Left = 91
+    Top = 112
+    Width = 70
+    Height = 21
+    Style = csDropDownList
+    Color = clGray
+    ItemHeight = 13
+    TabOrder = 5
+    OnChange = CommonChange
+    Items.Strings = (
+      'none'
+      '1 sec'
+      '2 sec'
+      '5 sec'
+      '10 sec'
+      '15 sec'
+      '20 sec'
+      '30 sec'
+      '1 min'
+      '2 min'
+      '5 min'
+      '10 min')
   end
 end

@@ -15,6 +15,8 @@ type
     cbTrayOnMinimize: TCheckBox;
     cbAlwaysOnTop: TCheckBox;
     cbHideScrollBarOnInActive: TCheckBox;
+    Label2: TLabel;
+    cbClearOnIdle: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure CommonChange(Sender: TObject);
@@ -41,9 +43,16 @@ uses UFormMain, UParam, ULog;
 {$R *.dfm}
 
 procedure TfrmSetup.FormCreate(Sender: TObject);
+var i:integer;
 begin
+    cbClearOnIdle.Items.Clear;
+    for i:=0 to Length(CLEAR_ON_IDLE_STR)-1 do begin
+        cbClearOnIdle.Items.Add(CLEAR_ON_IDLE_STR[i]);
+    end;
+
     param.OnChange(FromParam);
     fchange:=0;
+
 end;
 
 procedure TfrmSetup.beginChange;
@@ -68,6 +77,7 @@ begin
         param.beginChange();
         try try
 
+            param.ClearOnIdle := cbClearOnIdle.ItemIndex;
             param.IndexOfIntervalRefresh := cbInterval.ItemIndex;
             param.trayOnMinimize:=cbTrayOnMinimize.Checked;
             param.alwaysOnTop:=cbAlwaysOnTop.Checked;
@@ -99,6 +109,7 @@ begin
         beginChange();
         param.beginChange();
 
+        cbClearOnIdle.ItemIndex:=param.ClearOnIdle;
         cbInterval.ItemIndex:=param.IndexOfIntervalRefresh;
         cbTrayOnMinimize.Checked:=param.trayOnMinimize;
         cbAlwaysOnTop.Checked:=param.alwaysOnTop;

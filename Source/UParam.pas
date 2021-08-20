@@ -4,7 +4,9 @@ interface
 
 uses
   SysUtils, Windows, Messages, Classes, Graphics, Controls, Forms, Dialogs;
-
+const
+    CLEAR_ON_IDLE_STR:array[0..11] of string = ('none','1 sec','2 sec','5 sec','10 sec','15 sec','20 sec','30 sec','1 min','2 min','5 min','10 min');
+    CLEAR_ON_IDLE_DBL:array[0..11] of integer = (0    ,1      ,2      ,5      ,10      ,15      ,20      ,30      ,60     ,120    ,300    ,600);
 type
     PNotifyEvent = ^TNotifyEvent;
     TNotifyEvents = class(TObject)
@@ -22,6 +24,7 @@ type
     TParam = class(TObject)
     private
         fAlwaysOnTop: Boolean;
+        fClearOnIdle: Integer;
         fEvents: TNotifyEvents;
         fFiles: TStringList;
         fHideScrollBarOnInActive: Boolean;
@@ -29,6 +32,7 @@ type
         flock: Integer;
         fTrayOnMinimize: Boolean;
         procedure setAlwaysOnTop(Value: Boolean);
+        procedure setClearOnIdle(const Value: Integer);
         procedure setHideScrollBarOnInActive(Value: Boolean);
         procedure setIndexOfIntervalRefresh(const Value: Integer);
         procedure setTrayOnMinimize(Value: Boolean);
@@ -43,6 +47,8 @@ type
         procedure OnChange(aEvent: TNotifyEvent);
         function SaveToFile(const aFileName: string): Boolean;
         property AlwaysOnTop: Boolean read fAlwaysOnTop write setAlwaysOnTop;
+        //1 Очистка экрана перед выводом лога, если перед этим был простой N sec
+        property ClearOnIdle: Integer read fClearOnIdle write setClearOnIdle;
         property Files: TStringList read fFiles write fFiles;
         property HideScrollBarOnInActive: Boolean read fHideScrollBarOnInActive
             write setHideScrollBarOnInActive;
@@ -166,6 +172,7 @@ begin
         fTrayOnMinimize :=true;
         fAlwaysOnTop    :=true;
         fHideScrollBarOnInActive:=true;
+        fClearOnIdle:=0;
 
     except on e:Exception do begin
 
@@ -195,6 +202,10 @@ var
         end else if aName = 'TrayOnMinimize' then begin
 
             TrayOnMinimize:=boolean(StrToInt(aData));
+
+        end else if aName = 'ClearOnIdle' then begin
+
+            ClearOnIdle:=StrToInt(aData);
 
         end else if aName = 'AlwaysOnTop' then begin
 
@@ -293,6 +304,7 @@ begin
         add('AlwaysOnTop',AlwaysOnTop);
         add('HideScrollBarOnInActive',HideScrollBarOnInActive);
         add('Files',Files.Text);
+        add('ClearOnIdle',ClearOnIdle);
         cFile.SaveToFile(aFileName);
 
         result:=true;
@@ -313,6 +325,15 @@ begin
     if fAlwaysOnTop <> Value then
     begin
         fAlwaysOnTop := Value;
+        change();
+    end;
+end;
+
+procedure TParam.setClearOnIdle(const Value: Integer);
+begin
+    if fClearOnIdle <> Value then
+    begin
+        fClearOnIdle := Value;
         change();
     end;
 end;

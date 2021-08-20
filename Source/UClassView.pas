@@ -7,12 +7,14 @@ uses
 
 type
     THaveNewDataEvent = procedure (sender:TObject;str:string) of object;
+    TBeforeAddToMemoEvent = procedure (Sender: TObject) of object;
     TView = class(TObject)
     private
         fCount: LongInt;
         fFileName: string;
         fForm: TForm;
         fMemo: TMemo;
+        fOnBeforeAddToMemo: TBeforeAddToMemoEvent;
         fOnNewData: THaveNewDataEvent;
         fPosition: LongInt;
         fPreloadCount: Integer;
@@ -37,6 +39,8 @@ type
         property Memo: TMemo read fMemo write fMemo;
         property PreloadCount: Integer read fPreloadCount write fPreloadCount;
     published
+        property OnBeforeAddToMemo: TBeforeAddToMemoEvent read
+            fOnBeforeAddToMemo write fOnBeforeAddToMemo;
         property OnNewData: THaveNewDataEvent read fOnNewData write fOnNewData;
     end;
 
@@ -62,6 +66,8 @@ end;
 
 procedure TView.addToMemo(s:string);
 begin
+    if (Assigned(fOnBeforeAddToMemo)) then
+            fOnBeforeAddToMemo(self);
     memo.Lines.Add(Utf8ToAnsi(s));
 end;
 

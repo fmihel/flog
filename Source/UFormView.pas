@@ -40,12 +40,15 @@ type
     fMovet:boolean;
     fMovetX:integer;
     fMovetY:integer;
+    fPrevOutTime:double;
     procedure AlignPanel;
+    function getTimeSec:double;
   public
     { Public declarations }
     view:TView;
     function LoadFile(aFileName:string):boolean;
     procedure DoNewData(sender:TObject;str:string);
+    procedure DoBeforeAddToMemo(sender:TObject);
     procedure DoActivate(Sender:TObject;Activate:boolean);
 
   end;
@@ -130,6 +133,21 @@ begin
     AlignPanel;
 end;
 
+procedure TfrmView.DoBeforeAddToMemo(sender: TObject);
+var cDelta:double;
+    cCurrent:double;
+begin
+    if (Param.ClearOnIdle>0) then begin
+        cDelta:=CLEAR_ON_IDLE_DBL[Param.ClearOnIdle];
+        cCurrent:=self.getTimeSec();
+        if (fPrevOutTime>0) and (cCurrent - fPrevOutTime>cDelta) then begin
+            Memo.Clear();
+        end;
+        fPrevOutTime:=cCurrent;
+    end;
+
+end;
+
 procedure TfrmView.DoNewData(sender: TObject; str: string);
 begin
     TfrmMain(owner).MessageToTray(Utf8ToAnsi(str));
@@ -161,9 +179,11 @@ procedure TfrmView.FormCreate(Sender: TObject);
 begin
     view:=TView.Create();
     view.OnNewData:=DoNewData;
+    view.OnBeforeAddToMemo:=DoBeforeaddToMemo;
     view.memo:=Memo;
     view.Form:=self;
     fMovet:=false;
+    fPrevOutTime:=-1;
 
 end;
 procedure TfrmView.AlignPanel();
@@ -179,6 +199,11 @@ begin
     if self.WindowState = wsMaximized then
         frmMain.LastFormPlaceMode:='';
     AlignPanel();
+end;
+
+function TfrmView.getTimeSec: double;
+begin
+    result:=Now()*100000;
 end;
 
 procedure TfrmView.PanelNameMouseDown(Sender: TObject; Button: TMouseButton;
