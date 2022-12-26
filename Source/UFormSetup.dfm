@@ -1,6 +1,6 @@
 object frmSetup: TfrmSetup
-  Left = 894
-  Top = 420
+  Left = 1173
+  Top = 416
   BorderStyle = bsDialog
   Caption = 'Setup'
   ClientHeight = 365
@@ -32,6 +32,13 @@ object frmSetup: TfrmSetup
     Width = 69
     Height = 13
     Caption = 'clear after idle'
+  end
+  object Label4: TLabel
+    Left = 16
+    Top = 153
+    Width = 64
+    Height = 13
+    Caption = 'tray out filter'
   end
   object cbInterval: TComboBox
     Left = 88
@@ -127,5 +134,16 @@ object frmSetup: TfrmSetup
       '2 min'
       '5 min'
       '10 min')
+  end
+  object seTrayOutLen: TSpinEdit
+    Left = 91
+    Top = 151
+    Width = 70
+    Height = 22
+    MaxValue = 255
+    MinValue = 0
+    TabOrder = 6
+    Value = 0
+    OnChange = CommonChange
   end
 end

@@ -7,7 +7,8 @@ uses
   UClassView in '..\Source\UClassView.pas',
   UFormSetup in '..\Source\UFormSetup.pas' {frmSetup},
   UParam in '..\Source\UParam.pas',
-  ULog in '..\Source\ULog.pas';
+  ULog in '..\Source\ULog.pas',
+  UMatching in '..\Source\UMatching.pas';
 
 {$R *.res}
 

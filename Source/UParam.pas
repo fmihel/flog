@@ -31,11 +31,15 @@ type
         fIndexOfIntervalRefresh: Integer;
         flock: Integer;
         fTrayOnMinimize: Boolean;
+        fTrayOutFilter: string;
+        fTrayOutLen: Integer;
         procedure setAlwaysOnTop(Value: Boolean);
         procedure setClearOnIdle(const Value: Integer);
         procedure setHideScrollBarOnInActive(Value: Boolean);
         procedure setIndexOfIntervalRefresh(const Value: Integer);
         procedure setTrayOnMinimize(Value: Boolean);
+        procedure setTrayOutFilter(const Value: string);
+        procedure setTrayOutLen(const Value: Integer);
     public
         constructor Create;
         destructor Destroy; override;
@@ -56,6 +60,9 @@ type
             write setIndexOfIntervalRefresh;
         property TrayOnMinimize: Boolean read fTrayOnMinimize write
             setTrayOnMinimize;
+        property TrayOutFilter: string read fTrayOutFilter write
+            setTrayOutFilter;
+        property TrayOutLen: Integer read fTrayOutLen write setTrayOutLen;
     end;
 
 var
@@ -173,6 +180,8 @@ begin
         fAlwaysOnTop    :=true;
         fHideScrollBarOnInActive:=true;
         fClearOnIdle:=0;
+        fTrayOutFilter:='';
+        fTrayOutLen:=32;
 
     except on e:Exception do begin
 
@@ -218,6 +227,16 @@ var
         end else if aName = 'Files' then begin
 
             Files.Text:=aData;
+
+
+        end else if aName = 'TrayOutFilter' then begin
+
+            TrayOutFilter:=aData;
+
+        end else if aName = 'TrayOutLen' then begin
+
+            TrayOutlen:=StrToInt(aData);
+
 
         end;
 
@@ -305,6 +324,9 @@ begin
         add('HideScrollBarOnInActive',HideScrollBarOnInActive);
         add('Files',Files.Text);
         add('ClearOnIdle',ClearOnIdle);
+        add('TrayOutFilter',TrayOutFilter);
+        add('TrayOutLen',TrayOutLen);
+
         cFile.SaveToFile(aFileName);
 
         result:=true;
@@ -361,6 +383,24 @@ begin
     if fTrayOnMinimize <> Value then
     begin
         fTrayOnMinimize := Value;
+        change();
+    end;
+end;
+
+procedure TParam.setTrayOutFilter(const Value: string);
+begin
+    if fTrayOutFilter <> Value then
+    begin
+        fTrayOutFilter := Value;
+        change();
+    end;
+end;
+
+procedure TParam.setTrayOutLen(const Value: Integer);
+begin
+    if fTrayOutLen <> Value then
+    begin
+        fTrayOutLen := Value;
         change();
     end;
 end;

@@ -6,6 +6,9 @@
 			<Projects Include="flog.dproj">
 				<Dependencies/>
 			</Projects>
+			<Projects Include="..\..\ArmDiler\Utils\Str\Projects\pTestMatching.dproj">
+				<Dependencies/>
+			</Projects>
 		</ItemGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -23,14 +26,23 @@
 		<Target Name="flog:Make">
 			<MSBuild Targets="Make" Projects="flog.dproj"/>
 		</Target>
+		<Target Name="pTestMatching">
+			<MSBuild Projects="..\..\ArmDiler\Utils\Str\Projects\pTestMatching.dproj"/>
+		</Target>
+		<Target Name="pTestMatching:Clean">
+			<MSBuild Targets="Clean" Projects="..\..\ArmDiler\Utils\Str\Projects\pTestMatching.dproj"/>
+		</Target>
+		<Target Name="pTestMatching:Make">
+			<MSBuild Targets="Make" Projects="..\..\ArmDiler\Utils\Str\Projects\pTestMatching.dproj"/>
+		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="flog"/>
+			<CallTarget Targets="flog;pTestMatching"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="flog:Clean"/>
+			<CallTarget Targets="flog:Clean;pTestMatching:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="flog:Make"/>
+			<CallTarget Targets="flog:Make;pTestMatching:Make"/>
 		</Target>
 		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 	</Project>

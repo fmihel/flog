@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, ActnList;
+  Dialogs, StdCtrls, ExtCtrls, ActnList, Spin;
 
 type
   TfrmSetup = class(TForm)
@@ -17,6 +17,8 @@ type
     cbHideScrollBarOnInActive: TCheckBox;
     Label2: TLabel;
     cbClearOnIdle: TComboBox;
+    Label4: TLabel;
+    seTrayOutLen: TSpinEdit;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure CommonChange(Sender: TObject);
@@ -82,6 +84,8 @@ begin
             param.trayOnMinimize:=cbTrayOnMinimize.Checked;
             param.alwaysOnTop:=cbAlwaysOnTop.Checked;
             param.HideScrollBarOnInActive:=cbHideScrollBarOnInActive.Checked;
+            param.TrayOutLen:=seTrayOutLen.Value;
+
 
         except on e:Exception do begin
             log(e.Message,'CommonChange',ClassName);
@@ -114,6 +118,7 @@ begin
         cbTrayOnMinimize.Checked:=param.trayOnMinimize;
         cbAlwaysOnTop.Checked:=param.alwaysOnTop;
         cbHideScrollBarOnInActive.Checked := param.HideScrollBarOnInActive;
+        seTrayOutLen.Value := param.TrayOutLen;
 
         param.endChange(false);
         endChange();

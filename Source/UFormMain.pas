@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UFormView, StdCtrls, ExtCtrls, ToolWin, ComCtrls,
   PlatformDefaultStyleActnCtrls, ActnList, ActnMan, Menus, Buttons,
-  AppEvnts, ImgList;
+  AppEvnts, ImgList, UMatching;
 
 type
   TfrmMain = class(TForm)
@@ -262,12 +262,32 @@ end;
 
 procedure TfrmMain.MessageToTray(str: string);
 var cLen:integer;
+    m:TMatching;
+    cRec:TMatchingParseRec;
+    cOut:string;
 begin
+    OutputDebugString(PChar(str));
+    cOut:='';
     if (not Visible) then begin
-        clen:=Length(Str);
-        if (cLen>255) then
-            str:=copy(str,cLen-255+1,255);
-        TrayIcon1.BalloonHint:=str;
+        cOut:=str;
+        if (param.TrayOutLen>0) then begin
+            clen:=Length(str);
+            if (cLen>param.TrayOutLen) then
+                cOut:=copy(str,cLen-param.TrayOutLen+1,param.TrayOutLen);
+        end;
+        {
+        if (param.TrayOutFilter<>'') then begin
+            m:=TMatching.Create;
+            if (m.Matching(cOut,param.TrayOutFilter)) then begin
+                cRec:=m.Parse.Item[m.Parse.Count-1];
+                cOut := Trim(copy(cOut,cRec.Pos,cRec.Len));
+            end;
+            m.Free;
+        end;
+        }
+
+
+        TrayIcon1.BalloonHint:=cOut;
         TrayIcon1.ShowBalloonHint;
     end;
 end;
