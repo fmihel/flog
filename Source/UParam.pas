@@ -142,6 +142,7 @@ begin
     flock:=0;
     fEvents:=TNotifyEvents.Create();
     fFiles:=TStringList.Create;
+    self.initDefault();
 end;
 
 destructor TParam.Destroy;

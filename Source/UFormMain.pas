@@ -265,27 +265,36 @@ var cLen:integer;
     m:TMatching;
     cRec:TMatchingParseRec;
     cOut:string;
+    cTemplate:string;
 begin
     OutputDebugString(PChar(str));
     cOut:='';
     if (not Visible) then begin
         cOut:=str;
-        if (param.TrayOutLen>0) then begin
+
+        if (Trim(param.TrayOutFilter)<>'') then begin
+            m:=TMatching.Create;
+
+            cOut:=Matching.Reverse(cOut);
+            cTemplate:=Matching.Reverse(param.TrayOutFilter);
+
+            if (m.Matching(cOut,cTemplate)) then begin
+                cRec:=m.Parse.Item[0];
+                cOut := copy(cOut,cRec.Pos,cRec.Len);
+                cOut:=Trim(Matching.reverse(cOut));
+                if (param.TrayOutLen>0) then begin
+                    clen:=Length(cOut);
+                    if (cLen>param.TrayOutLen) then
+                        cOut:=copy(cOut,1,param.TrayOutLen);
+                end;
+            end;
+            m.Free;
+        end
+        else if (param.TrayOutLen>0) then begin
             clen:=Length(str);
             if (cLen>param.TrayOutLen) then
                 cOut:=copy(str,cLen-param.TrayOutLen+1,param.TrayOutLen);
         end;
-        {
-        if (param.TrayOutFilter<>'') then begin
-            m:=TMatching.Create;
-            if (m.Matching(cOut,param.TrayOutFilter)) then begin
-                cRec:=m.Parse.Item[m.Parse.Count-1];
-                cOut := Trim(copy(cOut,cRec.Pos,cRec.Len));
-            end;
-            m.Free;
-        end;
-        }
-
 
         TrayIcon1.BalloonHint:=cOut;
         TrayIcon1.ShowBalloonHint;

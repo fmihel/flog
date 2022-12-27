@@ -1,10 +1,10 @@
 object frmSetup: TfrmSetup
-  Left = 1173
-  Top = 416
+  Left = 1046
+  Top = 277
   BorderStyle = bsDialog
   Caption = 'Setup'
-  ClientHeight = 365
-  ClientWidth = 293
+  ClientHeight = 314
+  ClientWidth = 256
   Color = clGray
   Ctl3D = False
   Font.Charset = DEFAULT_CHARSET
@@ -17,6 +17,9 @@ object frmSetup: TfrmSetup
   Position = poMainFormCenter
   OnCreate = FormCreate
   OnShow = FormShow
+  DesignSize = (
+    256
+    314)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -32,13 +35,6 @@ object frmSetup: TfrmSetup
     Width = 69
     Height = 13
     Caption = 'clear after idle'
-  end
-  object Label4: TLabel
-    Left = 16
-    Top = 153
-    Width = 64
-    Height = 13
-    Caption = 'tray out filter'
   end
   object cbInterval: TComboBox
     Left = 88
@@ -62,8 +58,8 @@ object frmSetup: TfrmSetup
   end
   object Panel1: TPanel
     Left = 0
-    Top = 324
-    Width = 293
+    Top = 273
+    Width = 256
     Height = 41
     Align = alBottom
     BevelOuter = bvNone
@@ -71,8 +67,9 @@ object frmSetup: TfrmSetup
     Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 1
+    ExplicitLeft = 8
     object Button1: TButton
-      Left = 210
+      Left = 170
       Top = 8
       Width = 75
       Height = 25
@@ -135,15 +132,47 @@ object frmSetup: TfrmSetup
       '5 min'
       '10 min')
   end
-  object seTrayOutLen: TSpinEdit
-    Left = 91
-    Top = 151
-    Width = 70
-    Height = 22
-    MaxValue = 255
-    MinValue = 0
+  object GroupBox1: TGroupBox
+    Left = 8
+    Top = 147
+    Width = 240
+    Height = 102
+    Anchors = [akLeft, akTop, akRight]
+    Caption = 'Tray out crop'
     TabOrder = 6
-    Value = 0
-    OnChange = CommonChange
+    object Label4: TLabel
+      Left = 13
+      Top = 23
+      Width = 33
+      Height = 13
+      Caption = 'out len'
+    end
+    object Label3: TLabel
+      Left = 13
+      Top = 57
+      Width = 54
+      Height = 13
+      Caption = 'filter match'
+    end
+    object seTrayOutLen: TSpinEdit
+      Left = 83
+      Top = 21
+      Width = 70
+      Height = 22
+      MaxValue = 255
+      MinValue = 0
+      TabOrder = 0
+      Value = 0
+      OnChange = CommonChange
+    end
+    object edTrayOutFilter: TEdit
+      Left = 83
+      Top = 54
+      Width = 126
+      Height = 19
+      TabOrder = 1
+      Text = 'edTrayOutFilter'
+      OnChange = CommonChange
+    end
   end
 end

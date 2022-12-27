@@ -17,8 +17,11 @@ type
     cbHideScrollBarOnInActive: TCheckBox;
     Label2: TLabel;
     cbClearOnIdle: TComboBox;
-    Label4: TLabel;
+    GroupBox1: TGroupBox;
     seTrayOutLen: TSpinEdit;
+    Label4: TLabel;
+    edTrayOutFilter: TEdit;
+    Label3: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure CommonChange(Sender: TObject);
@@ -85,6 +88,7 @@ begin
             param.alwaysOnTop:=cbAlwaysOnTop.Checked;
             param.HideScrollBarOnInActive:=cbHideScrollBarOnInActive.Checked;
             param.TrayOutLen:=seTrayOutLen.Value;
+            param.TrayOutFilter:=edTrayOutFilter.Text;
 
 
         except on e:Exception do begin
@@ -119,6 +123,7 @@ begin
         cbAlwaysOnTop.Checked:=param.alwaysOnTop;
         cbHideScrollBarOnInActive.Checked := param.HideScrollBarOnInActive;
         seTrayOutLen.Value := param.TrayOutLen;
+        edTrayOutFilter.Text := param.TrayOutFilter;
 
         param.endChange(false);
         endChange();

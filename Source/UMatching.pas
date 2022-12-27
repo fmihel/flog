@@ -1,5 +1,5 @@
 {:
-ƒанный модуль срдержит класс, 
+ƒанный модуль срдержит класс,
 дл€ сопоставлени€ строки шаблону ( подобно регул€рным выражени€м)
 ѕо умолчанию
 * - любой символ и пусто
@@ -45,7 +45,7 @@ TMatching = class;
 
         class function Escape(aStr:string):string;static;
         class function Loop(aStr:string;aTemplate:string;aIndexResult,aIndexFromLoop:integer;aOut:TStrings):boolean;static;
-
+        class function Reverse(s:AnsiString):AnsiString;static;
     end;
 
     TMatchingParseRec = class(TObject)
@@ -272,6 +272,15 @@ begin
     end;
 end;
 
+class function Matching.Reverse(s: AnsiString): AnsiString;
+var
+  i  : integer;
+begin
+  result := '';
+  for i := 1 to Length( s ) do begin
+    result := s[ i ] + result;
+  end;
+end;
 {
 ****************************** TMatchingParseRec *******************************
 }
