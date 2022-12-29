@@ -77,6 +77,7 @@ TMatching = class;
         property Item[Index: Integer]: TMatchingParseRec read getItem; default;
     end;
 
+
     TMatching = class(TObject)
     private
         fMeta:  array[0..COUNT_META-1] of string;

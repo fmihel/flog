@@ -8,7 +8,8 @@ uses
   UFormSetup in '..\Source\UFormSetup.pas' {frmSetup},
   UParam in '..\Source\UParam.pas',
   ULog in '..\Source\ULog.pas',
-  UMatching in '..\Source\UMatching.pas';
+  UMatching in '..\Source\UMatching.pas',
+  UStr in '..\Source\UStr.pas';
 
 {$R *.res}
 
