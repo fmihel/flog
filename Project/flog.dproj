@@ -66,6 +66,9 @@
 			<DCCReference Include="..\Source\ULog.pas"/>
 			<DCCReference Include="..\Source\UMatching.pas"/>
 			<DCCReference Include="..\Source\UStr.pas"/>
+			<DCCReference Include="..\Source\UTrayForm.pas">
+				<Form>frmTray</Form>
+			</DCCReference>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -102,7 +105,7 @@
 						<VersionInfo Name="MajorVer">1</VersionInfo>
 						<VersionInfo Name="MinorVer">4</VersionInfo>
 						<VersionInfo Name="Release">1</VersionInfo>
-						<VersionInfo Name="Build">20</VersionInfo>
+						<VersionInfo Name="Build">27</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -114,7 +117,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">fmihel</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">log monitor</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">1.4.1.20</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">1.4.1.27</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright">windeco</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>

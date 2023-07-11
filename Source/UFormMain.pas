@@ -121,9 +121,23 @@ var
 implementation
 
 uses
-  UFormSetup, UParam, ULog, StrUtils;
+  UFormSetup, UParam, ULog, StrUtils, UTrayForm;
 
 {$R *.dfm}
+{
+function GenerateRandomString(const Length: Integer): string;
+const
+  CharSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+var
+  I: Integer;
+  off:integer;
+begin
+  Result := '';
+  for I := 1 to Length do
+
+    Result := Result + CharSet[Random(63) + 1];
+end;
+}
 
 procedure TfrmMain.FormDestroy(Sender: TObject);
 begin
@@ -337,13 +351,15 @@ var cLen:integer;
     cRec:TMatchingParseRec;
     cOut:string;
     cTemplate:string;
+    cOutToSystemTray:boolean;
 begin
+    cOutToSystemTray:=Param.TraySystem;
     OutputDebugString(PChar(str));
     cOut:='';
     if (not Visible) then begin
         cOut:=str;
-
-        if (Trim(param.TrayOutFilter)<>'') then begin
+        if (cOutToSystemTray) then begin
+            if (Trim(param.TrayOutFilter)<>'') then begin
             m:=TMatching.Create;
 
             cOut:=Matching.Reverse(cOut);
@@ -360,15 +376,18 @@ begin
                 end;
             end;
             m.Free;
-        end
-        else if (param.TrayOutLen>0) then begin
-            clen:=Length(str);
-            if (cLen>param.TrayOutLen) then
-                cOut:=copy(str,cLen-param.TrayOutLen+1,param.TrayOutLen);
-        end;
+            end
+            else if (param.TrayOutLen>0) then begin
+                clen:=Length(str);
+                if (cLen>param.TrayOutLen) then
+                    cOut:=copy(str,cLen-param.TrayOutLen+1,param.TrayOutLen);
+            end;
 
-        TrayIcon1.BalloonHint:=cOut;
-        TrayIcon1.ShowBalloonHint;
+            TrayIcon1.BalloonHint:=cOut;
+            TrayIcon1.ShowBalloonHint;
+        end else begin
+            ViewTray(cOut);
+        end;
     end;
 end;
 

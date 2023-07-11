@@ -22,6 +22,7 @@ type
     Label4: TLabel;
     edTrayOutFilter: TEdit;
     Label3: TLabel;
+    cbTraySystem: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure CommonChange(Sender: TObject);
@@ -89,6 +90,7 @@ begin
             param.HideScrollBarOnInActive:=cbHideScrollBarOnInActive.Checked;
             param.TrayOutLen:=seTrayOutLen.Value;
             param.TrayOutFilter:=edTrayOutFilter.Text;
+            param.TraySystem:=cbTraySystem.Checked;
 
 
         except on e:Exception do begin
@@ -124,6 +126,7 @@ begin
         cbHideScrollBarOnInActive.Checked := param.HideScrollBarOnInActive;
         seTrayOutLen.Value := param.TrayOutLen;
         edTrayOutFilter.Text := param.TrayOutFilter;
+        cbTraySystem.Checked:=param.TraySystem;
 
         param.endChange(false);
         endChange();

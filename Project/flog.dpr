@@ -9,7 +9,8 @@ uses
   UParam in '..\Source\UParam.pas',
   ULog in '..\Source\ULog.pas',
   UMatching in '..\Source\UMatching.pas',
-  UStr in '..\Source\UStr.pas';
+  UStr in '..\Source\UStr.pas',
+  UTrayForm in '..\Source\UTrayForm.pas' {frmTray};
 
 {$R *.res}
 

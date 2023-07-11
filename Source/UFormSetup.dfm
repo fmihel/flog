@@ -3,7 +3,7 @@ object frmSetup: TfrmSetup
   Top = 277
   BorderStyle = bsDialog
   Caption = 'Setup'
-  ClientHeight = 314
+  ClientHeight = 379
   ClientWidth = 256
   Color = clGray
   Ctl3D = False
@@ -19,7 +19,7 @@ object frmSetup: TfrmSetup
   OnShow = FormShow
   DesignSize = (
     256
-    314)
+    379)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -58,7 +58,7 @@ object frmSetup: TfrmSetup
   end
   object Panel1: TPanel
     Left = 0
-    Top = 273
+    Top = 338
     Width = 256
     Height = 41
     Align = alBottom
@@ -67,7 +67,7 @@ object frmSetup: TfrmSetup
     Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 1
-    ExplicitLeft = 8
+    ExplicitTop = 273
     object Button1: TButton
       Left = 170
       Top = 8
@@ -134,7 +134,7 @@ object frmSetup: TfrmSetup
   end
   object GroupBox1: TGroupBox
     Left = 8
-    Top = 147
+    Top = 139
     Width = 240
     Height = 102
     Anchors = [akLeft, akTop, akRight]
@@ -174,5 +174,15 @@ object frmSetup: TfrmSetup
       Text = 'edTrayOutFilter'
       OnChange = CommonChange
     end
+  end
+  object cbTraySystem: TCheckBox
+    Left = 16
+    Top = 257
+    Width = 142
+    Height = 17
+    Alignment = taLeftJustify
+    Caption = 'Use system tray'
+    TabOrder = 7
+    OnClick = CommonChange
   end
 end

@@ -33,6 +33,7 @@ type
         fTrayOnMinimize: Boolean;
         fTrayOutFilter: string;
         fTrayOutLen: Integer;
+        fTraySystem: Boolean;
         procedure setAlwaysOnTop(Value: Boolean);
         procedure setClearOnIdle(const Value: Integer);
         procedure setHideScrollBarOnInActive(Value: Boolean);
@@ -40,6 +41,7 @@ type
         procedure setTrayOnMinimize(Value: Boolean);
         procedure setTrayOutFilter(const Value: string);
         procedure setTrayOutLen(const Value: Integer);
+        procedure setTraySystem(Value: Boolean);
     public
         constructor Create;
         destructor Destroy; override;
@@ -63,6 +65,7 @@ type
         property TrayOutFilter: string read fTrayOutFilter write
             setTrayOutFilter;
         property TrayOutLen: Integer read fTrayOutLen write setTrayOutLen;
+        property TraySystem: Boolean read fTraySystem write setTraySystem;
     end;
 
 var
@@ -183,6 +186,7 @@ begin
         fClearOnIdle:=0;
         fTrayOutFilter:='';
         fTrayOutLen:=32;
+        fTraySystem:=true;
 
     except on e:Exception do begin
 
@@ -206,41 +210,33 @@ var
     procedure Assept(aName:string;aData:string);
     begin
         if aName = 'IndexOfIntervalRefresh' then begin
-
             IndexOfIntervalRefresh:=StrToInt(aData);
 
         end else if aName = 'TrayOnMinimize' then begin
-
             TrayOnMinimize:=boolean(StrToInt(aData));
 
         end else if aName = 'ClearOnIdle' then begin
-
             ClearOnIdle:=StrToInt(aData);
 
         end else if aName = 'AlwaysOnTop' then begin
-
             AlwaysOnTop:=boolean(StrToInt(aData));
 
         end else if aName = 'HideScrollBarOnInActive' then begin
-
             HideScrollBarOnInActive:=boolean(StrToInt(aData));
 
         end else if aName = 'Files' then begin
-
             Files.Text:=aData;
 
 
         end else if aName = 'TrayOutFilter' then begin
-
             TrayOutFilter:=aData;
 
         end else if aName = 'TrayOutLen' then begin
-
             TrayOutlen:=StrToInt(aData);
 
-
+        end else if aName = 'TraySystem' then begin
+            TraySystem:=boolean(StrToInt(aData));
         end;
-
     end;
 
 begin
@@ -327,6 +323,7 @@ begin
         add('ClearOnIdle',ClearOnIdle);
         add('TrayOutFilter',TrayOutFilter);
         add('TrayOutLen',TrayOutLen);
+        add('TraySystem',TraySystem);
 
         cFile.SaveToFile(aFileName);
 
@@ -402,6 +399,15 @@ begin
     if fTrayOutLen <> Value then
     begin
         fTrayOutLen := Value;
+        change();
+    end;
+end;
+
+procedure TParam.setTraySystem(Value: Boolean);
+begin
+    if fTraySystem <> Value then
+    begin
+        fTraySystem := Value;
         change();
     end;
 end;
