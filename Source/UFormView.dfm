@@ -1,6 +1,6 @@
 object frmView: TfrmView
-  Left = 986
-  Top = 324
+  Left = 906
+  Top = 203
   Caption = 'frmView'
   ClientHeight = 630
   ClientWidth = 854

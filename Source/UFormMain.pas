@@ -39,6 +39,9 @@ type
     Image1: TImage;
     SpeedButton7: TSpeedButton;
     ImageList1: TImageList;
+    SpeedButton8: TSpeedButton;
+    actExit: TAction;
+    actMaximizedWindow: TAction;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
@@ -51,10 +54,17 @@ type
     procedure actHorizExecute(Sender: TObject);
     procedure actShowBorderExecute(Sender: TObject);
     procedure actHideBorderExecute(Sender: TObject);
+    procedure actExitExecute(Sender: TObject);
+    procedure actMaximizedWindowExecute(Sender: TObject);
     procedure ApplicationEvents1Activate(Sender: TObject);
     procedure ApplicationEvents1Deactivate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure Panel1MouseDown(Sender: TObject; Button: TMouseButton; Shift:
+        TShiftState; X, Y: Integer);
+    procedure Panel1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure Panel1MouseUp(Sender: TObject; Button: TMouseButton; Shift:
+        TShiftState; X, Y: Integer);
     procedure PanelReSizeMouseDown(Sender: TObject; Button: TMouseButton; Shift:
         TShiftState; X, Y: Integer);
     procedure PanelReSizeMouseMove(Sender: TObject; Shift: TShiftState; X, Y:
@@ -63,6 +73,11 @@ type
         TShiftState; X, Y: Integer);
     procedure Timer1Timer(Sender: TObject);
   private
+
+    fMovet:boolean;
+    fMovetX:integer;
+    fMovetY:integer;
+
     fXPos:integer;
     fYPos:integer;
 
@@ -110,6 +125,9 @@ begin
     IniFile:=ExtractFilePath(Application.ExeName)+'flog.ini';
     param:=TParam.Create();
     param.OnChange(FromParam);
+
+    fMovet:=false;
+
 end;
 
 procedure TfrmMain.actAddExecute(Sender: TObject);
@@ -187,6 +205,23 @@ end;
 procedure TfrmMain.actHideBorderExecute(Sender: TObject);
 begin
     DoActivate(Sender,false);
+end;
+
+procedure TfrmMain.actExitExecute(Sender: TObject);
+begin
+    close;
+end;
+
+procedure TfrmMain.actMaximizedWindowExecute(Sender: TObject);
+begin
+    if WindowState=wsMaximized then
+    begin
+        WindowState:=wsNormal;
+    end
+    else
+    begin
+        WindowState:=wsMaximized;
+    end;
 end;
 
 procedure TfrmMain.ApplicationEvents1Activate(Sender: TObject);
@@ -319,6 +354,34 @@ begin
     // передаем парметры в компоненты
     _initTimer();
     _initAlwaysOnTop();
+end;
+
+procedure TfrmMain.Panel1MouseDown(Sender: TObject; Button: TMouseButton;
+    Shift: TShiftState; X, Y: Integer);
+begin
+    fMovet:=true;
+    fMovetX:=Mouse.CursorPos.X;
+    fMovetY:=Mouse.CursorPos.Y;
+end;
+
+procedure TfrmMain.Panel1MouseMove(Sender: TObject; Shift: TShiftState; X, Y:
+    Integer);
+begin
+    if fMovet then begin
+        //frmMain.Left:=frmMain.Left+1;
+        frmMain.Left:=frmMain.Left+Mouse.CursorPos.X - fMovetX;
+        frmMain.Top:=frmMain.Top+Mouse.CursorPos.Y - fMovetY;
+        fMovetX:=Mouse.CursorPos.X;
+        fMovetY:=Mouse.CursorPos.Y;
+    end;
+
+end;
+
+procedure TfrmMain.Panel1MouseUp(Sender: TObject; Button: TMouseButton; Shift:
+    TShiftState; X, Y: Integer);
+begin
+    fMovet:=false;
+
 end;
 
 procedure TfrmMain.PanelReSizeMouseDown(Sender: TObject; Button: TMouseButton;

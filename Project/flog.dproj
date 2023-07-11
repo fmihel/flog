@@ -3,7 +3,7 @@
 			<ProjectGuid>{D6183DD5-4A25-488C-AC5C-82650046D9BC}</ProjectGuid>
 			<ProjectVersion>12.0</ProjectVersion>
 			<MainSource>flog.dpr</MainSource>
-			<Config Condition="'$(Config)'==''">Release</Config>
+			<Config Condition="'$(Config)'==''">Remote</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -16,6 +16,11 @@
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
 			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Remote' or '$(Cfg_3)'!=''">
+			<Cfg_3>true</Cfg_3>
 			<CfgParent>Base</CfgParent>
 			<Base>true</Base>
 		</PropertyGroup>
@@ -39,6 +44,10 @@
 			<DCC_DependencyCheckOutputName>..\Debug\flog.exe</DCC_DependencyCheckOutputName>
 			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_3)'!=''">
+			<DCC_ExeOutput>W:\Общий_обмен\Филиппов_Михаил_ИТ\</DCC_ExeOutput>
+			<DCC_DependencyCheckOutputName>W:\Общий_обмен\Филиппов_Михаил_ИТ\flog.exe</DCC_DependencyCheckOutputName>
+		</PropertyGroup>
 		<ItemGroup>
 			<DelphiCompile Include="flog.dpr">
 				<MainSource>MainSource</MainSource>
@@ -59,6 +68,10 @@
 			<DCCReference Include="..\Source\UStr.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Remote">
+				<Key>Cfg_3</Key>
+				<CfgParent>Base</CfgParent>
 			</BuildConfiguration>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>
@@ -89,7 +102,7 @@
 						<VersionInfo Name="MajorVer">1</VersionInfo>
 						<VersionInfo Name="MinorVer">4</VersionInfo>
 						<VersionInfo Name="Release">1</VersionInfo>
-						<VersionInfo Name="Build">12</VersionInfo>
+						<VersionInfo Name="Build">13</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -101,7 +114,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">fmihel</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">log monitor</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">1.4.1.12</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">1.4.1.13</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright">windeco</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>
