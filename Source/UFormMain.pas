@@ -42,6 +42,11 @@ type
     SpeedButton8: TSpeedButton;
     actExit: TAction;
     actMaximizedWindow: TAction;
+    edSearch: TEdit;
+    actSearchDown: TAction;
+    SpeedButton9: TSpeedButton;
+    SpeedButton10: TSpeedButton;
+    actSearchUp: TAction;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
@@ -56,6 +61,8 @@ type
     procedure actHideBorderExecute(Sender: TObject);
     procedure actExitExecute(Sender: TObject);
     procedure actMaximizedWindowExecute(Sender: TObject);
+    procedure actSearchDownExecute(Sender: TObject);
+    procedure actSearchUpExecute(Sender: TObject);
     procedure ApplicationEvents1Activate(Sender: TObject);
     procedure ApplicationEvents1Deactivate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
@@ -86,10 +93,14 @@ type
     fSizeY:integer;
     fSizeW:integer;
     fSizeH:integer;
+    fSearch:string;
+    fSearchStep:integer;
+
 
     procedure _initTimer;
     procedure _initAlwaysOnTop;
     { Private declarations}
+    function search(countSteps:integer):integer;
   public
     { Public declarations }
     IniFile:string;
@@ -100,6 +111,8 @@ type
     procedure DoActivate(Sender:TObject;Activate:boolean);
     procedure StoryPos;
     procedure ReStoryPos;
+    function GetActiveView():TForm;
+
   end;
 
 var
@@ -108,7 +121,7 @@ var
 implementation
 
 uses
-  UFormSetup, UParam, ULog;
+  UFormSetup, UParam, ULog, StrUtils;
 
 {$R *.dfm}
 
@@ -125,8 +138,10 @@ begin
     IniFile:=ExtractFilePath(Application.ExeName)+'flog.ini';
     param:=TParam.Create();
     param.OnChange(FromParam);
-
     fMovet:=false;
+
+    fSearchStep:=0;
+    fSearch:='';
 
 end;
 
@@ -224,6 +239,25 @@ begin
     end;
 end;
 
+procedure TfrmMain.actSearchDownExecute(Sender: TObject);
+begin
+    if (fSearch <> edSearch.Text) then begin
+        fSearch:=edSearch.Text;
+        fSearchStep:=0;
+    end;
+    fSearchStep:=search(fSearchStep+1);
+end;
+
+procedure TfrmMain.actSearchUpExecute(Sender: TObject);
+begin
+    if (fSearch <> edSearch.Text) then begin
+        fSearch:=edSearch.Text;
+        fSearchStep:=0;
+    end;
+    if (fSearchStep>1) then
+        fSearchStep:=search(fSearchStep-1);
+end;
+
 procedure TfrmMain.ApplicationEvents1Activate(Sender: TObject);
 begin
     //DoActivate(Sender,true);
@@ -283,6 +317,8 @@ begin
             actHoriz.Execute();
         end;
     end;
+
+    edSearch.Height:= 24;
     OnPaint:=nil;
 end;
 
@@ -343,6 +379,45 @@ begin
     Top:=fYPos;
 end;
 
+function TfrmMain.search(countSteps:integer):integer;
+var
+  I, L,step: Integer;
+  memo:TMemo;
+  ActiveForm:TfrmView;
+  find:string;
+  fSearchPos:integer;
+begin
+    result:=countSteps;
+    ActiveForm:=TfrmView(self.GetActiveView());
+    find:=edSearch.Text;
+    fSearchPos:=1;
+
+    if (ActiveForm <> nil) then begin
+        memo:=ActiveForm.Memo;
+        for step := 0 to countSteps -1 do begin
+
+            I:=StrUtils.PosEx(find,memo.Text,fSearchPos);
+            if I > 0 then begin
+                L := SendMessage(memo.Handle, EM_LINEFROMCHAR, I - 1, 0);
+                //ShowMessage('Found at line ' + IntToStr(L));
+                // if you need to select the text found:
+                if (step = countSteps -1) then begin
+                    memo.SelStart := I - 1;
+                    memo.SelLength := Length(find);
+                    memo.SetFocus;
+
+                end;
+                fSearchPos:=I+1;
+            end else begin
+                result:=step;
+                break;
+            end;
+        end;
+    end;
+
+
+end;
+
 procedure TfrmMain.StoryPos;
 begin
     fXPos:=Left;
@@ -354,6 +429,21 @@ begin
     // передаем парметры в компоненты
     _initTimer();
     _initAlwaysOnTop();
+end;
+
+function TfrmMain.GetActiveView: TForm;
+var i:integer;
+begin
+    result:=nil;
+    for i:=0 to self.MDIChildCount-1 do begin
+        if (self.MDIChildren[i].Active) then
+        begin
+            result:=self.MDIChildren[i];
+            break;
+        end;
+    end;
+
+
 end;
 
 procedure TfrmMain.Panel1MouseDown(Sender: TObject; Button: TMouseButton;
@@ -408,7 +498,6 @@ procedure TfrmMain.PanelReSizeMouseUp(Sender: TObject; Button: TMouseButton;
 begin
     fSizing:=false;
 end;
-
 
 procedure TFrmMain._initTimer();
 begin
