@@ -53,7 +53,7 @@ object frmMain: TfrmMain
     object SpeedButton1: TSpeedButton
       Left = 39
       Top = 1
-      Width = 32
+      Width = 30
       Height = 30
       Cursor = crArrow
       Action = actAdd
@@ -103,8 +103,8 @@ object frmMain: TfrmMain
       ShowHint = True
     end
     object SpeedButton3: TSpeedButton
-      Left = 2
-      Top = 0
+      Left = 3
+      Top = 1
       Width = 30
       Height = 30
       Cursor = crArrow
@@ -260,7 +260,7 @@ object frmMain: TfrmMain
     end
     object SpeedButton2: TSpeedButton
       Left = 180
-      Top = 0
+      Top = 1
       Width = 30
       Height = 30
       Cursor = crArrow
