@@ -47,6 +47,8 @@ type
     SpeedButton9: TSpeedButton;
     SpeedButton10: TSpeedButton;
     actSearchUp: TAction;
+    SpeedButton11: TSpeedButton;
+    actWrap: TAction;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
@@ -63,6 +65,7 @@ type
     procedure actMaximizedWindowExecute(Sender: TObject);
     procedure actSearchDownExecute(Sender: TObject);
     procedure actSearchUpExecute(Sender: TObject);
+    procedure actWrapExecute(Sender: TObject);
     procedure ApplicationEvents1Activate(Sender: TObject);
     procedure ApplicationEvents1Deactivate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
@@ -95,7 +98,7 @@ type
     fSizeH:integer;
     fSearch:string;
     fSearchStep:integer;
-
+    Wrap:boolean;
 
     procedure _initTimer;
     procedure _initAlwaysOnTop;
@@ -156,7 +159,7 @@ begin
 
     fSearchStep:=0;
     fSearch:='';
-
+    Wrap:=false;
 end;
 
 procedure TfrmMain.actAddExecute(Sender: TObject);
@@ -270,6 +273,24 @@ begin
     end;
     if (fSearchStep>1) then
         fSearchStep:=search(fSearchStep-1);
+end;
+
+procedure TfrmMain.actWrapExecute(Sender: TObject);
+var
+  child: TForm;
+  i: Integer;
+begin
+  Wrap:=not Wrap;
+  if (Wrap) then begin
+    SpeedButton11.NumGlyphs:=1;
+  end else begin
+    SpeedButton11.NumGlyphs:=2;
+  end;
+    for i:=0 to self.MDIChildCount-1 do begin
+        child:=self.MDIChildren[i];
+        TfrmView(child).Wrap(Wrap);
+    end;
+
 end;
 
 procedure TfrmMain.ApplicationEvents1Activate(Sender: TObject);

@@ -1,6 +1,6 @@
 object frmView: TfrmView
-  Left = 906
-  Top = 203
+  Left = 941
+  Top = 264
   Caption = 'frmView'
   ClientHeight = 630
   ClientWidth = 854
@@ -43,6 +43,11 @@ object frmView: TfrmView
         'Image::save Exception: PDFDelegateFailed `'#1053#1077' '#1091#1076#1072#1077#1090#1089#1103' '#1085#1072#1081#1090#1080' '#1091#1082#1072#1079#1072 +
         #1085#1085#1099#1081' '#1092#1072#1081#1083'.'
       #39' @ error/pdf.c/ReadPDFImage/794'
+      
+        '[13-Dec-2019 11:50:32 UTC] fmihel\ConvertPdfToImage\ConvertPdfTo' +
+        'Image::save Exception: PDFDelegateFailed `'#1053#1077' '#1091#1076#1072#1077#1090#1089#1103' '#1085#1072#1081#1090#1080' '#1091#1082#1072#1079#1072 +
+        #1085#1085#1099#1081' '#1092#1072#1081#1083'.'#39' @ error/pdf.c/ReadPDFImage/794'
+      ''
       ''
       '12345678'
       'WWwwAA 8')

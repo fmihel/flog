@@ -50,6 +50,7 @@ type
     procedure DoNewData(sender:TObject;str:string);
     procedure DoBeforeAddToMemo(sender:TObject);
     procedure DoActivate(Sender:TObject;Activate:boolean);
+    procedure Wrap(wrap:boolean);
 
   end;
 
@@ -257,6 +258,19 @@ begin
 
         end;
     end;
+end;
+
+procedure TfrmView.Wrap(wrap: boolean);
+begin
+    if (wrap = true) then begin
+        Memo.WordWrap:=true;
+        Memo.ScrollBars:=ssVertical;
+    end else begin
+        Memo.WordWrap:=false;
+        Memo.ScrollBars:=ssBoth;
+
+    end;
+
 end;
 
 end.
