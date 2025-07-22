@@ -46,6 +46,7 @@ object frmMain: TfrmMain
     OnMouseDown = Panel1MouseDown
     OnMouseMove = Panel1MouseMove
     OnMouseUp = Panel1MouseUp
+    ExplicitLeft = -1
     DesignSize = (
       855
       32)
@@ -579,7 +580,7 @@ object frmMain: TfrmMain
       Width = 30
       Height = 27
       Cursor = crArrow
-      Action = actSearchUp
+      Action = actWrap
       Flat = True
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -893,7 +894,7 @@ object frmMain: TfrmMain
     Left = 624
     Top = 88
     Bitmap = {
-      494C010103000800600010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000800640010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

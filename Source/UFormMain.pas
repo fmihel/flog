@@ -280,16 +280,16 @@ var
   child: TForm;
   i: Integer;
 begin
-//  Wrap:=not Wrap;
-//  if (Wrap) then begin
-//    SpeedButton11.NumGlyphs:=1;
-//  end else begin
-//    SpeedButton11.NumGlyphs:=2;
-//  end;
-    for i:=0 to self.MDIChildCount-1 do begin
-        child:=self.MDIChildren[i];
-        TfrmView(child).Wrap(Wrap);
-    end;
+  Wrap:=not Wrap;
+  if (Wrap) then begin
+    SpeedButton11.NumGlyphs:=1;
+  end else begin
+    SpeedButton11.NumGlyphs:=2;
+  end;
+  for i:=0 to self.MDIChildCount-1 do begin
+      child:=self.MDIChildren[i];
+      TfrmView(child).Wrap(Wrap);
+  end;
 
 end;
 
