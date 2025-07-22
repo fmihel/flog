@@ -22,7 +22,8 @@ type
         function ExTrim(str: string): string;
     protected
         stream: TStream;
-        procedure addToMemo(s:string);
+        procedure addToMemo(s:string); overload;
+        procedure addToMemo(s: TStrings); overload;
         procedure createStream;
         procedure freeStream;
         function GetSize: LongInt;
@@ -69,6 +70,13 @@ begin
     if (Assigned(fOnBeforeAddToMemo)) then
             fOnBeforeAddToMemo(self);
     memo.Lines.Add(Utf8ToAnsi(s));
+end;
+
+procedure TView.addToMemo(s: TStrings);
+begin
+    if (Assigned(fOnBeforeAddToMemo)) then
+            fOnBeforeAddToMemo(self);
+    memo.Lines.AddStrings(s);
 end;
 
 function TView.ChangeType: Integer;
@@ -173,9 +181,12 @@ function TView.Read(aFromRow: Integer = -1): string;
         cResult:TStringList;   /// список строк для отображения в хинте
         i:integer;
 
+        cLines:TStringList;
+
 begin
     createStream();
     cResult:=TStringList.Create;
+    cLines:=TStringList.Create;
     try
         cCursor:=0;
         outString:='';
@@ -191,8 +202,9 @@ begin
                 if (aFromRow = -1) or (cCursor > aFromRow) then begin
 
                     if (outString<>'') then begin
-                        self.addToMemo(outString);
-                        //result:=outString;
+    //                        self.addToMemo(outString);
+                        cLines.Add(Utf8ToAnsi(outString));
+                            //result:=outString;
                         if (Trim(outString)<>'') then begin
                             cResult.Add(ExTrim(outString));
                             if cResult.Count>cMaxCount then
@@ -210,8 +222,9 @@ begin
             cSize:=stream.Read(s,sizeof(s));
         end;
         if (outString<>'') then begin
-            self.addToMemo(outString);
-           //result:=outString;
+    //            self.addToMemo(outString);
+            cLines.Add(Utf8ToAnsi(outString));
+               //result:=outString;
             if (Trim(outString)<>'') then begin
                 cResult.Add(ExTrim(outString));
 
@@ -220,7 +233,7 @@ begin
             end;
         end;
 
-        // формируем спиоск строк к отображению в хинте
+            // формируем спиоск строк к отображению в хинте
         cCount:=cMaxCount;
         if (cResult.Count<cCount) then
             cCount:=cResult.Count;
@@ -229,12 +242,16 @@ begin
                 result:=result+#13#10;
             result:=result+cResult.Strings[i];
         end;
+        if (cLines.count>0) then begin
+            self.AddToMemo(cLines);
+        end;
         // ----------------------------------------
 
     except
 
     end;
 
+    cLines.Free;
     cResult.Free;
     freeStream();
 end;

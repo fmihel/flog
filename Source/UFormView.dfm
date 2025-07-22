@@ -26,10 +26,11 @@ object frmView: TfrmView
     Width = 854
     Height = 630
     Align = alClient
-    Color = 1973790
+    Color = clBlack
+    Ctl3D = False
     Font.Charset = RUSSIAN_CHARSET
-    Font.Color = 14341071
-    Font.Height = -13
+    Font.Color = clWhite
+    Font.Height = -12
     Font.Name = 'Consolas'
     Font.Style = []
     Lines.Strings = (
@@ -51,6 +52,7 @@ object frmView: TfrmView
       ''
       '12345678'
       'WWwwAA 8')
+    ParentCtl3D = False
     ParentFont = False
     PopupMenu = PopupMenu1
     ReadOnly = True
@@ -67,7 +69,7 @@ object frmView: TfrmView
     BevelOuter = bvNone
     BorderStyle = bsSingle
     Caption = 'PanelName'
-    Color = 1973790
+    Color = clBlack
     Font.Charset = DEFAULT_CHARSET
     Font.Color = 16171150
     Font.Height = -11
@@ -218,8 +220,8 @@ object frmView: TfrmView
   end
   object PopupMenu1: TPopupMenu
     Images = frmMain.ImageList1
-    Left = 64
-    Top = 88
+    Left = 168
+    Top = 168
     object clear1: TMenuItem
       Action = actClear
       ImageIndex = 0

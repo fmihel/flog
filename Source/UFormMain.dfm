@@ -1,6 +1,6 @@
 object frmMain: TfrmMain
-  Left = 697
-  Top = 312
+  Left = 577
+  Top = 341
   VertScrollBar.ParentColor = False
   BorderStyle = bsNone
   Caption = 'flog'
@@ -36,7 +36,7 @@ object frmMain: TfrmMain
     Align = alTop
     BevelOuter = bvNone
     Caption = 'Panel1'
-    Color = 2565927
+    Color = clBlack
     DoubleBuffered = True
     ParentBackground = False
     ParentDoubleBuffered = False
@@ -659,7 +659,6 @@ object frmMain: TfrmMain
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      OnClick = actWrapExecute
     end
     object edSearch: TEdit
       Left = 232
@@ -894,7 +893,7 @@ object frmMain: TfrmMain
     Left = 624
     Top = 88
     Bitmap = {
-      494C010103000800580010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000800600010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

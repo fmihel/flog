@@ -5,7 +5,7 @@ object frmTray: TfrmTray
   Caption = 'frmTray'
   ClientHeight = 95
   ClientWidth = 406
-  Color = 2565927
+  Color = clBlack
   Ctl3D = False
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
@@ -97,7 +97,7 @@ object frmTray: TfrmTray
       Height = 82
       Anchors = [akLeft, akTop, akRight, akBottom]
       BorderStyle = bsNone
-      Color = 2565927
+      Color = clBlack
       Ctl3D = False
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -113,8 +113,6 @@ object frmTray: TfrmTray
       WordWrap = False
       OnClick = Memo1Click
       OnDblClick = Memo1DblClick
-      ExplicitWidth = 462
-      ExplicitHeight = 228
     end
   end
   object Timer1: TTimer

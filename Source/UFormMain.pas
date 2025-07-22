@@ -280,12 +280,12 @@ var
   child: TForm;
   i: Integer;
 begin
-  Wrap:=not Wrap;
-  if (Wrap) then begin
-    SpeedButton11.NumGlyphs:=1;
-  end else begin
-    SpeedButton11.NumGlyphs:=2;
-  end;
+//  Wrap:=not Wrap;
+//  if (Wrap) then begin
+//    SpeedButton11.NumGlyphs:=1;
+//  end else begin
+//    SpeedButton11.NumGlyphs:=2;
+//  end;
     for i:=0 to self.MDIChildCount-1 do begin
         child:=self.MDIChildren[i];
         TfrmView(child).Wrap(Wrap);
@@ -372,37 +372,41 @@ var cLen:integer;
     cRec:TMatchingParseRec;
     cOut:string;
     cTemplate:string;
-    cOutToSystemTray:boolean;
+//    cOutToSystemTray:boolean;
 begin
-    cOutToSystemTray:=Param.TraySystem;
+//    cOutToSystemTray:=Param.TraySystem;
     OutputDebugString(PChar(str));
     cOut:='';
     if (not Visible) then begin
         cOut:=str;
-        if (cOutToSystemTray) then begin
-            if (Trim(param.TrayOutFilter)<>'') then begin
-            m:=TMatching.Create;
+        if (Param.TraySystem) then begin
+//            if (Trim(param.TrayOutFilter)<>'') then begin
+//            m:=TMatching.Create;
+//
+//            cOut:=Matching.Reverse(cOut);
+//            cTemplate:=Matching.Reverse(param.TrayOutFilter);
+//
+//            if (m.Matching(cOut,cTemplate)) then begin
+//                cRec:=m.Parse.Item[0];
+//                cOut := copy(cOut,cRec.Pos,cRec.Len);
+//                cOut:=Trim(Matching.reverse(cOut));
+//                if (param.TrayOutLen>0) then begin
+//                    clen:=Length(cOut);
+//                    if (cLen>param.TrayOutLen) then
+//                        cOut:=copy(cOut,1,param.TrayOutLen);
+//                end;
+//            end;
+//            m.Free;
+//            end
+//            else if (param.TrayOutLen>0) then begin
+//                clen:=Length(str);
+//                if (cLen>param.TrayOutLen) then
+//                    cOut:=copy(str,cLen-param.TrayOutLen+1,param.TrayOutLen);
+//            end;
 
-            cOut:=Matching.Reverse(cOut);
-            cTemplate:=Matching.Reverse(param.TrayOutFilter);
-
-            if (m.Matching(cOut,cTemplate)) then begin
-                cRec:=m.Parse.Item[0];
-                cOut := copy(cOut,cRec.Pos,cRec.Len);
-                cOut:=Trim(Matching.reverse(cOut));
-                if (param.TrayOutLen>0) then begin
-                    clen:=Length(cOut);
-                    if (cLen>param.TrayOutLen) then
-                        cOut:=copy(cOut,1,param.TrayOutLen);
-                end;
-            end;
-            m.Free;
-            end
-            else if (param.TrayOutLen>0) then begin
-                clen:=Length(str);
-                if (cLen>param.TrayOutLen) then
-                    cOut:=copy(str,cLen-param.TrayOutLen+1,param.TrayOutLen);
-            end;
+              clen:=Length(str);
+              if (cLen>100) then
+                cOut:=copy(str,cLen-100,param.TrayOutLen);
 
             TrayIcon1.BalloonHint:=cOut;
             TrayIcon1.ShowBalloonHint;
